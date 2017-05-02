@@ -134,3 +134,4 @@ Verify in game.
 * Own cloud
 * SFTP
 * Quick host
+* Finalize copy / filebot scripts 
