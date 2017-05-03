@@ -81,6 +81,55 @@ UUID=7416a3ff-8d0e-4891-8e85-b96613dbb050       /media/Ryan     ext4    errors=c
 /media/Atlas:/media/Fontaine:/media/Fitzroy /media/Lutece fuse.mergerfs  direct_io,defaults,allow_other,minfreespace=200G 0 0
 ```
 Reboot and verify drives work with auto-mount. Shutdown, pull drives and verify boot. Replace drives and reboot.
+### Install Snapraid 
+ ```
+ cd /
+ sudo mkdir /etc/snapraid
+ sudo vim /etc/snapraid/snapraid-runner.conf
+ ```
+Setup snapraid runner config file use [linkatello](https://github.com/Chronial/snapraid-runner/blob/master/snapraid-runner.conf.example) for a starer. 
+
+``` 
+cd / 
+sudo vim /etc/snapraid/snapraid.conf
+```
+
+```
+block_size 256
+autosave 0
+
+content /media/Fitzroy/snapraid.content
+disk Fitzroy /media/Fitzroy
+
+content /media/Fontaine/snapraid.content
+disk Fontaine /media/Fontaine
+
+content /media/Atlas/snapraid.content
+disk Atlas /media/Atlas
+
+parity /media/Ryan/snapraid.parity
+
+exclude .bak
+exclude *.unrecoverable
+exclude /tmp/
+exclude lost+found/
+exclude .content
+exclude aquota.group
+exclude aquota.user
+exclude snapraid.conf
+exclude *.DS_Store
+```
+Initialize docker image using: 
+```
+docker create  \
+  --restart=always \
+  -v /media:/media \
+  -v /etc/snapraid:/config \
+  -e PGID=0 -e PUID=0 \
+  --name snapraid \
+  carlba/snapraid
+ ``` 
+Note should be linuxserver/snapraid but its not in their feed? 
 
 ### Install Plex
 ```
