@@ -147,6 +147,19 @@ linuxserver/plex
 Verify at ip:32400.
 
 
+### Install PlexPy 
+```
+sudo docker create 
+--name=plexpy 
+-v /media/Atlas/plexpy:/config 
+-v "/media/Atlas/Plex/Library/Application Support/Plex Media Server/Logs":/logs:ro 
+-e PGID=0 -e PUID=0  
+-e TZ=America/Chicago 
+-p 8181:8181 
+linuxserver/plexpy
+```
+verify at ip:8181
+
 ### Install Duplicati
 ```
 docker run --rm -it \
