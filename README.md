@@ -180,7 +180,7 @@ docker run --restart=always \
 -e 'JVM_OPTS=-Xmx27000M -Xms1024M' \
 -e EULA=true\
 -v /media/Fitzroy/Applications/MineCraft:/data \
--d -p 25565:25565 \
+-p 25565:25565 \
 --name minecraft \
 itzg/minecraft-server
 ```
