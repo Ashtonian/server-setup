@@ -137,6 +137,7 @@ sudo docker create \
 --name=plex \
 --net=host \
 --restart=always \
+--device /dev/dri:/dev/dri \
 -e VERSION=latest \
 -v /media/Lutece:/data/lutece \
 -v /media/Atlas/Plex:/config \
