@@ -4,6 +4,7 @@ This is a my homelab notes.
 
 ## Internal Deliverables
 
+* docker-swarm + stacks
 * webmin (:10000)
 * portainer (:9000)
 * docker visualizer (:8080)
@@ -11,6 +12,7 @@ This is a my homelab notes.
 ## External Devlierables
 
 * ddns (ddns.domain)
+* https:// via lets-encrypt via traefik
 * plex (plex.domain)
 * ombi (requests.domain)
 * nextcloud (reqeusts.domain)
@@ -89,6 +91,7 @@ Intended for plex and related images. NOTE: plex server will still need manual c
 Manual:
 
 * MUST FULLY QUALIFY https://domain:port in both 'Custom certificate domain' and 'Custom server access URLs' in settings -> network.
+* VERIFY HW TRANSCODE
 
 ```shell
 cd plex/
@@ -120,18 +123,16 @@ One Day Maybe
 TODO
 
 * cpu limits/prioritization
+* tautulli volume issue
+* move docker root to workspace ssd
+* volume map (plex media)
+* plex permissions
+* VERIFY plex HW acceleration map
+* ssh, sftp, network share
+
+Next
+* zfs
 * traefik rate limits
 * traefik default 404 error behavior
 * traefik security mailing for updates
-* volume map (plex media)
-* tautulli volume issue
 * reduce grub boot wait time from 30
-* move docker root to workspace ssd
-* plex permissions
-* plex HW acceleration map
-* ssh, sftp, network share
-* zfs
-
-Next
-* traefik
-* nextcloud
