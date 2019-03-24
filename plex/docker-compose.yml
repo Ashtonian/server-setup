@@ -1,0 +1,77 @@
+version: "3.7"
+services:
+
+  plex:
+    image: linuxserver/plex
+    ports:
+      - "32400:32400"
+    networks:
+      - plex
+      - public
+    environment:
+      PUID: 1000
+      PGID: 1000
+      VERSION: public
+    volumes:
+      - /dev/dri:/dev/dri
+      - plex_config:/config
+      - plex_tv:/data/tvshows #:ro
+      - plex_movies:/data/movies #:ro
+      - plex_transcode:/transcode
+    deploy:
+      labels:
+        traefik.enable: "true"
+        traefik.docker.network: "public"
+        traefik.backend: "plex"
+        traefik.frontend.rule: "Host:plex.ashtonkinslow.com"
+        traefik.port: "32400"
+        traefik.protocol: "http"
+
+  # tautulli:
+  #   image: linuxserver/tautulli:latest
+  #   environment:
+  #     - PUID=1000
+  #     - PGID=1000
+  #     - TZ=America/Chicago
+  #   volumes:
+  #     - tautulli_config:/config
+  #     - plex_config_logs:/logs
+  #   ports:
+  #     - 8181:8181
+
+  ombi:
+    image: linuxserver/ombi:latest
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: America/Chicago
+      # HOST: *
+    volumes:
+      - ombi_config:/config
+    ports:
+      - 3579:3579
+    networks:
+      - plex
+      - public
+    deploy:
+      labels:
+        traefik.enable: "true"
+        traefik.docker.network: "public"
+        traefik.backend: "ombi"
+        traefik.frontend.rule: "Host:requests.ashtonkinslow.com"
+        traefik.port: "3579"
+        traefik.protocol: "http"
+
+networks:
+  public:
+    external: true
+  plex:
+
+volumes:
+  ombi_config:
+  tautulli_config:
+  plex_config_logs: # TODO: readonly based on bind to plex_config/
+  plex_config:
+  plex_transcode: 
+  plex_tv: #external
+  plex_movies: #external
