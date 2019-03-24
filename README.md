@@ -4,6 +4,7 @@ This is a my homelab notes.
 
 ## Internal Deliverables
 
+* docker readonly sock proxy for security
 * docker-swarm + stacks
 * webmin (:10000)
 * portainer (:9000)
