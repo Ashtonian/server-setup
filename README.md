@@ -89,6 +89,7 @@ Intended for plex and related images. NOTE: plex server will still need manual c
 Manual:
 
 * MUST FULLY QUALIFY https://domain:port in both 'Custom certificate domain' and 'Custom server access URLs' in settings -> network.
+* VERIFY HW TRANSCODE
 
 ```shell
 cd plex/

@@ -17,7 +17,7 @@ services:
       - plex_config:/config
       - plex_tv:/data/tvshows #:ro
       - plex_movies:/data/movies #:ro
-      - plex_transcode:/transcode
+      # - plex_transcode:/transcode
     deploy:
       labels:
         traefik.enable: "true"
