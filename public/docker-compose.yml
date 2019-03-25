@@ -1,10 +1,8 @@
 version: "3.7"
 services:
-
   cloudflare-ddns:
     image: joshava/cloudflare-ddns
-    networks: 
-      - cfddns
+    network_mode: "host"
     environment:
       ZONE: ashtonkinslow.com
       HOST: ddns.ashtonkinslow.com
@@ -20,9 +18,7 @@ services:
       - "443:443"
       - "8181:8080"
     image: traefik:latest
-    networks:
-      - public
-      - dockersock
+    network_mode: "host"
     command:
       # - "--debug=true" # sekurity check
       # - "--api" # sekurity check exposes config via 8080
@@ -33,19 +29,12 @@ services:
       - "--acme.email=acme@ashtonkinslow.com"
       - "--acme.storage=acme.json"
       - "--acme.entryPoint=https"
-      # - "--acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory" # lets encrypt staging, remove after verified deployment
+      - "--acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory" # lets encrypt staging, remove after verified deployment
       - "--acme.tlsChallenge"
       - "--acme.onHostRule=true"
       - "--docker"
-      - "--docker.endpoint=tcp://mgmt_docker-proxy:2375" ## references mgmt stack
+      - "--docker.endpoint=tcp://docker-proxy:2375" ## references mgmt stack
       # - "--docker.exposedbydefault=false" # sekurity check
-      - "--docker.swarmMode"
+      # - "--docker.swarmMode"
       - "--docker.domain=mydomain.ca"
       - "--docker.watch"
-
-networks:
-  public:
-    external: true
-  dockersock: 
-    external: true
-  cfddns: 
