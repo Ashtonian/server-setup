@@ -121,18 +121,16 @@ One Day Maybe
 TODO
 
 * cpu limits/prioritization
+* tautulli volume issue
+* move docker root to workspace ssd
+* volume map (plex media)
+* plex permissions
+* VERIFY plex HW acceleration map
+* ssh, sftp, network share
+
+Next
+* zfs
 * traefik rate limits
 * traefik default 404 error behavior
 * traefik security mailing for updates
-* volume map (plex media)
-* tautulli volume issue
 * reduce grub boot wait time from 30
-* move docker root to workspace ssd
-* plex permissions
-* plex HW acceleration map
-* ssh, sftp, network share
-* zfs
-
-Next
-* traefik
-* nextcloud

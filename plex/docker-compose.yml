@@ -3,10 +3,18 @@ services:
 
   plex:
     image: linuxserver/plex
+    # network_mode: host
     ports:
-      - "32400:32400"
+      - target: 32400
+        published: 32400
+        protocol: tcp
+        mode: host
+      # - "32400:32400/udp"
+      # - "32469:32469"
+      # - "32469:32469/udp"
+      # - "5353:5353/udp"
+      # - "1900:1900/udp"
     networks:
-      - plex
       - public
     environment:
       PUID: 1000
@@ -17,7 +25,7 @@ services:
       - plex_config:/config
       - plex_tv:/data/tvshows #:ro
       - plex_movies:/data/movies #:ro
-      # - plex_transcode:/transcode
+      - plex_transcode:/transcode
     deploy:
       labels:
         traefik.enable: "true"
@@ -26,6 +34,15 @@ services:
         traefik.frontend.rule: "Host:plex.ashtonkinslow.com"
         traefik.port: "32400"
         traefik.protocol: "http"
+        traefik.frontend.headers.SSLRedirect: "true"
+        traefik.frontend.headers.STSSeconds: "315360000"
+        traefik.frontend.headers.browserXSSFilter: "true"
+        traefik.frontend.headers.contentTypeNosniff: "true"
+        traefik.frontend.headers.forceSTSHeader: "true"
+        traefik.frontend.headers.SSLHost: "plex.ashtonkinslow.com"
+        traefik.frontend.headers.STSIncludeSubdomains: "true"
+        traefik.frontend.headers.STSPreload: "true"
+        traefik.frontend.headers.frameDeny: "true"
 
   # tautulli:
   #   image: linuxserver/tautulli:latest
@@ -51,7 +68,6 @@ services:
     ports:
       - 3579:3579
     networks:
-      - plex
       - public
     deploy:
       labels:

@@ -1,0 +1,28 @@
+version: "3.7"
+services:
+  ws:
+    image: ksdn117/web-socket-test
+    ports:
+      - 8010:8010
+    networks:
+      - public
+    deploy:
+      labels:
+        traefik.enable: "true"
+        traefik.docker.network: "public"
+        traefik.backend: "test"
+        traefik.frontend.rule: "Host:test.ashtonkinslow.com"
+        traefik.port: "8010"
+        traefik.protocol: "http"
+        traefik.frontend.headers.SSLRedirect: "true"
+        traefik.frontend.headers.STSSeconds: "315360000"
+        traefik.frontend.headers.browserXSSFilter: "true"
+        traefik.frontend.headers.contentTypeNosniff: "true"
+        traefik.frontend.headers.forceSTSHeader: "true"
+        traefik.frontend.headers.SSLHost: "test.ashtonkinslow.com"
+        traefik.frontend.headers.STSIncludeSubdomains: "true"
+        traefik.frontend.headers.STSPreload: "true"
+        traefik.frontend.headers.frameDeny: "true"
+networks:
+  public:
+    external: true
