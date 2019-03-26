@@ -4,6 +4,8 @@ This is a my homelab notes.
 
 ## Internal Deliverables
 
+* docker readonly sock proxy for security
+* docker-swarm + stacks
 * webmin (:10000)
 * portainer (:9000)
 * docker visualizer (:8080)
@@ -11,6 +13,7 @@ This is a my homelab notes.
 ## External Devlierables
 
 * ddns (ddns.domain)
+* https:// via lets-encrypt via traefik
 * plex (plex.domain)
 * ombi (requests.domain)
 * nextcloud (reqeusts.domain)
