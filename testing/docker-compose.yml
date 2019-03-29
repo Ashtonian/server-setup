@@ -12,6 +12,7 @@ services:
         traefik.frontend.rule: "Host:test.ashtonkinslow.com"
         traefik.port: "80"
         traefik.protocol: "http"
+        traefik.frontend.passHostHeader: "true"
         traefik.frontend.headers.SSLRedirect: "true"
         traefik.frontend.headers.STSSeconds: "315360000"
         traefik.frontend.headers.browserXSSFilter: "true"
