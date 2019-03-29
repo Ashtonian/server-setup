@@ -1,6 +1,5 @@
 version: "3.7"
 services:
-
   plex:
     image: linuxserver/plex
     # network_mode: host
@@ -34,6 +33,8 @@ services:
         traefik.frontend.rule: "Host:plex.ashtonkinslow.com"
         traefik.port: "32400"
         traefik.protocol: "http"
+        traefik.frontend.whiteList.sourceRange: 10.0.0.0/24
+        # traefik.frontend.whiteList.useXForwardedFor: true
         traefik.frontend.headers.SSLRedirect: "true"
         traefik.frontend.headers.STSSeconds: "315360000"
         traefik.frontend.headers.browserXSSFilter: "true"
@@ -88,6 +89,6 @@ volumes:
   tautulli_config:
   plex_config_logs: # TODO: readonly based on bind to plex_config/
   plex_config:
-  plex_transcode: 
+  plex_transcode:
   plex_tv: #external
   plex_movies: #external
