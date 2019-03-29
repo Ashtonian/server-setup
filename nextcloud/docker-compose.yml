@@ -45,8 +45,8 @@ services:
         traefik.frontend.rule: "Host:nextcloud.ashtonkinslow.com"
         traefik.port: "80"
         traefik.protocol: "http"
-        traefik.frontend.whiteList.sourceRange: 10.0.0.0/24
-        traefik.frontend.whiteList.useXForwardedFor: "true"
+        traefik.frontend.whiteList.sourceRange: 10.0.0.1/24
+        # traefik.frontend.whiteList.useXForwardedFor: "true"
 
   nextcloud-cron:
     image: nextcloud:fpm-alpine
