@@ -1,9 +1,8 @@
 version: "3.7"
 services:
-
   cloudflare-ddns:
     image: joshava/cloudflare-ddns
-    networks: 
+    networks:
       - cfddns
     environment:
       ZONE: ashtonkinslow.com
@@ -24,7 +23,7 @@ services:
       - public
       - dockersock
     command:
-      # - "--debug=true" # sekurity check
+      - "--debug=true" # sekurity check
       # - "--api" # sekurity check exposes config via 8080
       - "--entrypoints=Name:http Address::80 Redirect.EntryPoint:https"
       - "--entrypoints=Name:https Address::443 TLS"
@@ -46,6 +45,6 @@ services:
 networks:
   public:
     external: true
-  dockersock: 
+  dockersock:
     external: true
-  cfddns: 
+  cfddns:
