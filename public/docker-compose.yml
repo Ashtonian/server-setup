@@ -23,7 +23,7 @@ services:
       - public
       - dockersock
     command:
-      - "--debug=true" # sekurity check
+      # - "--debug=true" # sekurity check
       # - "--api" # sekurity check exposes config via 8080
       - "--entrypoints=Name:http Address::80 Redirect.EntryPoint:https"
       - "--entrypoints=Name:https Address::443 TLS"

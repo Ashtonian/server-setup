@@ -33,8 +33,6 @@ services:
         traefik.frontend.rule: "Host:plex.ashtonkinslow.com"
         traefik.port: "32400"
         traefik.protocol: "http"
-        traefik.frontend.whiteList.sourceRange: 10.0.0.0/24
-        traefik.frontend.whiteList.useXForwardedFor: "true"
         traefik.frontend.headers.SSLRedirect: "true"
         traefik.frontend.headers.STSSeconds: "315360000"
         traefik.frontend.headers.browserXSSFilter: "true"

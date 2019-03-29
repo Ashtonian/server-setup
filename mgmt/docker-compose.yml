@@ -1,6 +1,5 @@
 version: "3.7"
 services:
-
   # by default exposes sock listed services read only
   docker-proxy:
     image: tecnativa/docker-socket-proxy
@@ -13,7 +12,7 @@ services:
       # SWARM: 1
       TASKS: 1
     volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock" 
+      - "/var/run/docker.sock:/var/run/docker.sock"
     deploy:
       placement:
         constraints: [node.role == manager]
@@ -70,6 +69,8 @@ services:
       - portainer_data:/data
     networks:
       - portainer-net
+      # traefik.frontend.whiteList.sourceRange: 10.0.0.0/24
+      # traefik.frontend.whiteList.useXForwardedFor: ""true
     deploy:
       mode: replicated
       replicas: 1
@@ -84,4 +85,4 @@ networks:
 
 volumes:
   portainer_data:
-  mgmt-redis: 
+  mgmt-redis:
