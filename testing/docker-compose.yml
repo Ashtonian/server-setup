@@ -1,7 +1,16 @@
 version: "3.7"
+
+x-logging:
+  &default-logging
+  options:
+    max-size: '500m'
+    max-file: '5'
+  driver: json-file
+
 services:
   ws:
     image: mendhak/http-https-echo
+    logging: *default-logging
     networks:
       - public
     deploy:

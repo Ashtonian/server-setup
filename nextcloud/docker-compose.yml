@@ -1,8 +1,16 @@
 version: "3.7"
 
+x-logging:
+  &default-logging
+  options:
+    max-size: '500m'
+    max-file: '5'
+  driver: json-file
+
 services:
   db:
     image: mariadb
+    logging: *default-logging
     networks:
       - nextcloud
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
@@ -16,6 +24,7 @@ services:
 
   redis:
     image: redis
+    logging: *default-logging
     volumes:
       - redis:/data
     networks:
@@ -23,14 +32,17 @@ services:
 
   nextcloud:
     image: nextcloud:apache
+    logging: *default-logging
     volumes:
       - nextcloud:/var/www/html
+      - nextcloud_data:/data
     environment:
       MYSQL_PASSWORD: ${NC_DB_PASS}
       MYSQL_DATABASE: nextcloud
       MYSQL_USER: nextcloud
       NEXTCLOUD_TRUSTED_DOMAINS: nextcloud.ashtonkinslow.com
       REDIS_HOST: redis
+      NEXTCLOUD_DATA_DIR: /data
     depends_on:
       - db
       - redis
@@ -50,6 +62,7 @@ services:
 
   nextcloud-cron:
     image: nextcloud:fpm-alpine
+    logging: *default-logging
     networks:
       - nextcloud
     volumes:
@@ -68,3 +81,9 @@ volumes:
   redis:
   db:
   nextcloud:
+  nextcloud_data:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: ':/lutece/apps/nextcloud/'

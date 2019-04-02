@@ -35,6 +35,84 @@ zfs:
 - create data sets, update recordset size, enable compression
 - take snapshot
 
+```shell
+sudo zfs set compression=lz4 lutece
+sudo zfs create lutece/media
+sudo zfs set recordsize=1m lutece/media
+sudo zfs create lutece/media/movies
+sudo zfs create lutece/media/tv
+sudo zfs create lutece/media/pictures
+sudo zfs create lutece/media/books
+sudo zfs set compression=gzip-9 lutece/media/books
+sudo zfs create lutece/media/music
+sudo mkdir /lutece/media/ringtones
+sudo zfs create lutece/docs
+sudo zfs set compression=gzip-9 lutece/docs
+sudo zfs create lutece/proj
+sudo zfs set compression=gzip-9 lutece/proj
+sudo zfs create lutece/apps
+sudo mkdir /lutece/apps/nextcloud
+sudo zfs create lutece/backup
+sudo zfs create lutece/tmp
+sudo zfs create lutece/public
+sudo zfs create lutece/drop
+sudo zfs create lutece/fam
+```
+
+Permissions:
+
+```shell
+
+#sudo groupadd mediaro
+sudo groupadd mediarw
+
+sudo chmod o=rX,g=rwX,u=--- -R /lutece/media/
+sudo chown :mediarw -R /lutece/media/
+
+sudo adduser --system --no-create-home --group --disabled-login --shell=/bin/false --uid 5000 plex
+#sudo usermod -a -G mediaro plex
+#sudo mkdir /mnt/workspace/plex
+sudo chmod o=r,g=rwX,u=rwX -R /mnt/workspace/plex
+sudo chown plex:plex -R /mnt/workspace/plex
+
+sudo adduser --system --no-create-home --group --disabled-login --shell=/bin/false --uid 5001 nextcloud
+
+sudo adduser --system --no-create-home --group --disabled-login --shell=/bin/false --uid 5002 tautulli
+
+sudo adduser --system --no-create-home --group --disabled-login --shell=/bin/false --uid 5003 ombi
+
+sudo chmod o=rX,g=rwX,u=--- -R /lutece/apps/nextcloud
+sudo chown :nextcloud -R /lutece/apps/nextcloud
+
+
+sudo chmod o=rX,g=rwX,u=--- -R /lutece/media/
+sudo chown :mediarw -R /lutece/media/
+
+sudo chmod o=-w-,g=rwx,u=rwx -R /lutece/drop/
+sudo chown ashtonian:mediarw -R /lutece/drop/
+
+sudo chmod o=---,g=rwx,u=rwx -R /lutece/fam/
+sudo chown ashtonian: -R /lutece/fam/
+
+sudo chmod o=---,g=r--,u=rwx -R /lutece/proj/
+sudo chown ashtonian: -R /lutece/proj/
+
+sudo chmod o=---,g=r--,u=rwx -R /lutece/backup/
+sudo chown ashtonian: -R /lutece/backup/
+
+sudo chmod o=rwx,g=r--,u=--- -R /lutece/public/
+sudo chown : -R /lutece/public/
+
+sudo chmod o=---,g=rwx,u=rwx -R /lutece/tmp/
+sudo chown ashtonian: -R /lutece/tmp/
+
+sudo chmod o=---,g=r--,u=rwx -R /lutece/scripts/
+sudo chown ashtonian: -R /lutece/scripts/
+
+sudo chmod o=---,g=r--,u=rwx -R /lutece/docs/
+sudo chown ashtonian: -R /lutece/docs/
+```
+
 Docker:
 
 ```shell
@@ -50,6 +128,8 @@ sudo apt install docker-ce
 
 # add user to docker to avoid using sudo
 sudo usermod -aG docker $USER
+
+#sudo vi lib/systemd/system/docker.service # add --data-root ssd/new_location/
 ```
 
 Docker-Compose
@@ -100,11 +180,12 @@ Intended for plex and related images. NOTE: plex server will still need manual c
 Manual:
 
 - MUST FULLY QUALIFY https://domain:port in both 'Custom certificate domain' and 'Custom server access URLs' in settings -> network.
-- VERIFY HW TRANSCODE
+- VERIFY HW TRANSCODE - requires docker-compose pending device handling for swarm
 
 ```shell
 cd plex/
-sudo docker stack deploy --compose-file=docker-compose.yml plex
+#sudo docker stack deploy --compose-file=docker-compose.yml plex
+#sudo docker-compose up -d 
 ```
 
 ### public
@@ -112,8 +193,16 @@ sudo docker stack deploy --compose-file=docker-compose.yml plex
 Intended for public services sub plex related.
 
 ```shell
+# export CF_API_KEY=
 cd public/
 sudo docker stack deploy --compose-file=docker-compose.yml public
+```
+
+### nextcloud
+
+```shell
+# export NC_DB_ROOT_PASS=
+# export NC_DB_PASS=
 ```
 
 ## Workspace
@@ -132,9 +221,7 @@ TODO
 
 - https://hub.docker.com/r/linuxserver/unifi-controller
 - watchtower
-- move docker root to workspace ssd update startexec @ lib/systemd/system/docker.service with --data-root /new_location/
 - volume map (plex media)
-- plex permissions
 - VERIFY plex HW acceleration map
 - ssh, sftp, network share
 
@@ -143,49 +230,3 @@ Next
 - traefik rate limits https://docs.traefik.io/configuration/commons/#rate-limiting
 - traefik default 404 error behavior https://docs.traefik.io/v1.6/configuration/commons/#custom-error-pages
 - traefik security mailing for updates
-
-volumes:
-dbdata:
-driver: local
-driver_opts:
-type: 'none'
-o: 'bind'ro
-device: '/srv/db-data'
-read_only: true
-
-      version: '3.4'
-
-x-logging:
-&default-logging
-options:
-max-size: '12m'
-max-file: '5'
-driver: json-file
-
-services:
-web:
-image: myapp/web:latest
-logging: *default-logging
-db:
-image: mysql:latest
-logging: *default-logging
-
-Special Volumes
-
-Pathed Volumes:
-
-- plex config
-- tatuti pointed to plex config
-- ro tv
-- ro movies
-- rw nextcloud
-
-Permissions groups:
-RW_MEDIA
-R_MEDIA
-
-Expected ENV Var:
-
-- NB_DB_ROOT_PASS
-- NC_DB_PASS
-- CF_API_KEY

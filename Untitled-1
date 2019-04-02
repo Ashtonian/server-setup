@@ -1,0 +1,1 @@
+sudo rsync -avh --progress --remove-source-files /lutece/media2/Movies/ /lutece/media/movies

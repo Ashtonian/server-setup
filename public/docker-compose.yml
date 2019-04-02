@@ -1,7 +1,16 @@
 version: "3.7"
+
+x-logging:
+  &default-logging
+  options:
+    max-size: '500m'
+    max-file: '5'
+  driver: json-file
+
 services:
   cloudflare-ddns:
     image: joshava/cloudflare-ddns
+    logging: *default-logging
     networks:
       - cfddns
     environment:
@@ -17,14 +26,15 @@ services:
     ports:
       - "80:80"
       - "443:443"
-      - "8181:8080"
+      - "8183:8080"
     image: traefik:latest
+    logging: *default-logging
     networks:
       - public
       - dockersock
     command:
       - "--debug=true" # sekurity check
-      # - "--api" # sekurity check exposes config via 8080
+      - "--api" # sekurity check exposes config via 8080
       - "--entrypoints=Name:http Address::80 Redirect.EntryPoint:https"
       - "--entrypoints=Name:https Address::443 TLS"
       - "--defaultentrypoints=http,https"
@@ -32,14 +42,14 @@ services:
       - "--acme.email=acme@ashtonkinslow.com"
       - "--acme.storage=acme.json"
       - "--acme.entryPoint=https"
-      - "--acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory" # lets encrypt staging, remove after verified deployment
+      # - "--acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory" # lets encrypt staging, remove after verified deployment
       - "--acme.tlsChallenge"
       - "--acme.onHostRule=true"
       - "--docker"
       - "--docker.endpoint=tcp://mgmt_docker-proxy:2375" ## references mgmt stack
       # - "--docker.exposedbydefault=false" # sekurity check
-      - "--docker.swarmMode"
-      - "--docker.domain=mydomain.ca"
+      # - "--docker.swarmMode"
+      # - "--docker.domain=mydomain.ca"
       - "--docker.watch"
 
 networks:

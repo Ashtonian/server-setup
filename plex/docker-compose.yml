@@ -1,8 +1,17 @@
 version: "3.7"
+
+x-logging:
+  &default-logging
+  options:
+    max-size: '500m'
+    max-file: '5'
+  driver: json-file
+
 services:
   plex:
+    restart: always
     image: linuxserver/plex
-    # network_mode: host
+    logging: *default-logging
     ports:
       - target: 32400
         published: 32400
@@ -16,15 +25,31 @@ services:
     networks:
       - public
     environment:
-      PUID: 1000
-      PGID: 1000
+      PUID: 5000
+      PGID: 5000
       VERSION: public
-    volumes:
+    devices:
       - /dev/dri:/dev/dri
+    volumes:
       - plex_config:/config
-      - plex_tv:/data/tvshows #:ro
-      - plex_movies:/data/movies #:ro
-      - plex_transcode:/transcode
+      - plex_tv:/data/tvshows:ro
+      - plex_movies:/data/movies:ro 
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: "public"
+      traefik.backend: "plex"
+      traefik.frontend.rule: "Host:plex.ashtonkinslow.com"
+      traefik.port: "32400"
+      traefik.protocol: "http"
+      traefik.frontend.headers.SSLRedirect: "true"
+      traefik.frontend.headers.STSSeconds: "315360000"
+      traefik.frontend.headers.browserXSSFilter: "true"
+      traefik.frontend.headers.contentTypeNosniff: "true"
+      traefik.frontend.headers.forceSTSHeader: "true"
+      traefik.frontend.headers.SSLHost: "plex.ashtonkinslow.com"
+      traefik.frontend.headers.STSIncludeSubdomains: "true"
+      traefik.frontend.headers.STSPreload: "true"
+      traefik.frontend.headers.frameDeny: "true"
     deploy:
       labels:
         traefik.enable: "true"
@@ -43,23 +68,29 @@ services:
         traefik.frontend.headers.STSPreload: "true"
         traefik.frontend.headers.frameDeny: "true"
 
-  # tautulli:
-  #   image: linuxserver/tautulli:latest
-  #   environment:
-  #     - PUID=1000
-  #     - PGID=1000
-  #     - TZ=America/Chicago
-  #   volumes:
-  #     - tautulli_config:/config
-  #     - plex_config_logs:/logs
-  #   ports:
-  #     - 8181:8181
+  tautulli:
+    restart: always
+    image: linuxserver/tautulli:latest
+    logging: *default-logging
+    environment:
+      PUID: 5002
+      PGID: 5002
+      TZ: America/Chicago
+    networks:
+      - plex
+    volumes:
+      - tautulli_config:/config
+      - plex_config_logs:/logs
+    ports:
+      - 8181:8181
 
   ombi:
+    restart: always
     image: linuxserver/ombi:latest
+    logging: *default-logging
     environment:
-      PUID: 1000
-      PGID: 1000
+      PUID: 5003
+      PGID: 5003
       TZ: America/Chicago
       # HOST: *
     volumes:
@@ -68,6 +99,13 @@ services:
       - 3579:3579
     networks:
       - public
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: "public"
+      traefik.backend: "ombi"
+      traefik.frontend.rule: "Host:requests.ashtonkinslow.com"
+      traefik.port: "3579"
+      traefik.protocol: "http"
     deploy:
       labels:
         traefik.enable: "true"
@@ -85,8 +123,30 @@ networks:
 volumes:
   ombi_config:
   tautulli_config:
-  plex_config_logs: # TODO: readonly based on bind to plex_config/
+  plex_tv:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind,ro'
+      device: '/lutece/media/tv/'
+
+  plex_movies:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind,ro'
+      device: '/lutece/media/movies/'
+
   plex_config:
-  plex_transcode:
-  plex_tv: #external
-  plex_movies: #external
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind,rw'
+      device: '/mnt/workspace/plex/'
+
+  plex_config_logs:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind,ro'
+      device: '/mnt/workspace/plex/Library/Application Support/Plex Media Server/Logs/'
