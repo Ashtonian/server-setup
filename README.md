@@ -185,7 +185,7 @@ Manual:
 ```shell
 cd plex/
 #sudo docker stack deploy --compose-file=docker-compose.yml plex
-#sudo docker-compose up -d 
+#sudo docker-compose up -d
 ```
 
 ### public
@@ -227,6 +227,9 @@ TODO
 
 Next
 
+- verify plex remote access
+- ombi config
+- download stack
 - traefik rate limits https://docs.traefik.io/configuration/commons/#rate-limiting
 - traefik default 404 error behavior https://docs.traefik.io/v1.6/configuration/commons/#custom-error-pages
 - traefik security mailing for updates
