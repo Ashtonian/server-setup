@@ -4,29 +4,36 @@ This is a my homelab notes.
 
 ## Internal Deliverables
 
-* docker readonly sock proxy for security
-* docker-swarm + stacks
-* webmin (:10000)
-* portainer (:9000)
-* docker visualizer (:8080)
+- docker readonly sock proxy for security
+- docker-swarm + stacks
+- webmin (:10000)
+- portainer (:9000)
+- docker visualizer (:8080)
 
 ## External Devlierables
 
-* ddns (ddns.domain)
-* https:// via lets-encrypt via traefik
-* plex (plex.domain)
-* ombi (requests.domain)
-* nextcloud (reqeusts.domain)
+- ddns (ddns.domain)
+- https:// via lets-encrypt via traefik
+- plex (plex.domain)
+- ombi (requests.domain)
+- nextcloud (reqeusts.domain)
 
 ## Manual Pre Installs
 
-* Git
-* Webmin
-* Caps -> ctrl
-* oh my zsh
-* vs code
-* 1password
-* Docker, compose, swarm
+- /etc/default/grub boot time
+- Git
+- Webmin
+- Caps -> ctrl
+- oh my zsh
+- vs code
+- 1password
+- Docker, compose, swarm
+
+zfs:
+
+- /etc/default/zfs delay start
+- create data sets, update recordset size, enable compression
+- take snapshot
 
 Docker:
 
@@ -47,7 +54,7 @@ sudo usermod -aG docker $USER
 
 Docker-Compose
 
-* may not be needed with eventually with docker swarm
+- may not be needed with eventually with docker swarm
 
 ```shell
 # must be done with bash, zsh reports parse error due to unescaped regex char
@@ -66,11 +73,12 @@ sudo docker swarm init
 
 ## Additional Expectations
 
-* related cname records point to ddns record
+- related cname records point to ddns record
 
 ## Stacks
 
 ### public net
+
 ```shell
 docker network create --driver=overlay --attachable public
 docker network create --driver=overlay --attachable dockersock
@@ -91,8 +99,8 @@ Intended for plex and related images. NOTE: plex server will still need manual c
 
 Manual:
 
-* MUST FULLY QUALIFY https://domain:port in both 'Custom certificate domain' and 'Custom server access URLs' in settings -> network.
-* VERIFY HW TRANSCODE
+- MUST FULLY QUALIFY https://domain:port in both 'Custom certificate domain' and 'Custom server access URLs' in settings -> network.
+- VERIFY HW TRANSCODE
 
 ```shell
 cd plex/
@@ -112,29 +120,72 @@ sudo docker stack deploy --compose-file=docker-compose.yml public
 
 One Day Maybe
 
-* vpn
-* auto encrypt+backup
-* https://hub.docker.com/r/linuxserver/unifi-controller
-* investigate syncthing, glances, external facing dashboard (muximux?), watchtower, docker sec, smokeping, voip
-* script out initial installs and cert authorities
-* internal proxy + dns + webmin cert + pfsense cert
-* jackett, sonarr, radarr, qbit ect
-* log rotation driver with limits
+- vpn
+- auto encrypt+backup
+- investigate syncthing, glances, external facing dashboard (muximux?), docker sec, smokeping, voip
+- script out initial installs and cert authorities
+- internal proxy + dns + webmin cert + pfsense cert
+- jackett, sonarr, radarr, qbit ect
+- log rotation driver with limits
 
 TODO
 
-* cpu limits/prioritization
-* tautulli volume issue
-* move docker root to workspace ssd
-* volume map (plex media)
-* plex permissions
-* VERIFY plex HW acceleration map
-* ssh, sftp, network share
+- https://hub.docker.com/r/linuxserver/unifi-controller
+- watchtower
+- move docker root to workspace ssd update startexec @ lib/systemd/system/docker.service with --data-root /new_location/
+- volume map (plex media)
+- plex permissions
+- VERIFY plex HW acceleration map
+- ssh, sftp, network share
 
 Next
-* zfs
-* traefik rate limits
-* traefik default 404 error behavior
-* traefik security mailing for updates
-* reduce grub boot wait time from 30
- 
+
+- traefik rate limits https://docs.traefik.io/configuration/commons/#rate-limiting
+- traefik default 404 error behavior https://docs.traefik.io/v1.6/configuration/commons/#custom-error-pages
+- traefik security mailing for updates
+
+volumes:
+dbdata:
+driver: local
+driver_opts:
+type: 'none'
+o: 'bind'ro
+device: '/srv/db-data'
+read_only: true
+
+      version: '3.4'
+
+x-logging:
+&default-logging
+options:
+max-size: '12m'
+max-file: '5'
+driver: json-file
+
+services:
+web:
+image: myapp/web:latest
+logging: *default-logging
+db:
+image: mysql:latest
+logging: *default-logging
+
+Special Volumes
+
+Pathed Volumes:
+
+- plex config
+- tatuti pointed to plex config
+- ro tv
+- ro movies
+- rw nextcloud
+
+Permissions groups:
+RW_MEDIA
+R_MEDIA
+
+Expected ENV Var:
+
+- NB_DB_ROOT_PASS
+- NC_DB_PASS
+- CF_API_KEY
