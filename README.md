@@ -149,6 +149,7 @@ Docker-Swarm:
 
 ```shell
 sudo docker swarm init
+docker swarm update --task-history-limit 2zs
 ```
 
 ## Additional Expectations
@@ -228,7 +229,6 @@ TODO
 Next
 
 - verify plex remote access
-- ombi config
 - download stack
 - traefik rate limits https://docs.traefik.io/configuration/commons/#rate-limiting
 - traefik default 404 error behavior https://docs.traefik.io/v1.6/configuration/commons/#custom-error-pages
