@@ -1,0 +1,129 @@
+version: "3.7"
+
+x-logging:
+  &default-logging
+  options:
+    max-size: '500m'
+    max-file: '5'
+  driver: json-file
+
+services:
+  radarr:
+    image: linuxserver/radarr
+    logging: *default-logging
+    container_name: radarr
+    networks:
+      - dl
+    environment:
+      PUID: 5004
+      PGID: 5004
+      TZ: America/Chicago
+    volumes:
+      - radarr_config:/config
+      - movies_rw:/movies
+      - radarr_intake:/downloads
+    ports:
+      - 7878:7878
+    restart: unless-stopped
+  
+  sonarr:
+    image: linuxserver/sonarr
+    logging: *default-logging
+    container_name: sonarr
+    networks:
+      - dl
+    environment:
+      PUID: 5005
+      PGID: 5005
+      TZ: America/Chicago
+    volumes:
+      - sonarr_config:/config
+      - tv_rw:/tv
+      - sonarr_intake:/downloads
+    ports:
+      - 8989:8989
+    restart: unless-stopped
+
+  lidarr:
+    image: linuxserver/lidarr
+    logging: *default-logging
+    container_name: lidarr
+    networks:
+      - dl
+    environment:
+      PUID: 5006
+      PGID: 5006
+      TZ: America/Chicago
+    volumes:
+      - lidarr_config:/config
+      - music_rw:/music
+      - lidarr_intake:/downloads
+    ports:
+      - 8686:8686
+    restart: unless-stopped
+    
+  jackett:
+    image: linuxserver/jackett
+    logging: *default-logging
+    container_name: jackett
+    networks:
+      - dl
+    environment:
+      PUID: 5007
+      PGID: 5007
+      TZ: America/Chicago
+    volumes:
+      - jackett_config:/config
+      - jacket_downloads:/downloads
+    ports:
+      - 9117:9117
+    restart: unless-stopped
+
+networks:
+  dl:
+
+volumes:
+  radarr_config:
+  movies_rw:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind,rw'
+      device: '/lutece/media/movies/'
+  radarr_intake:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind,rw'
+      device: '/mnt/temp/lftp/radarr'
+
+  sonarr_config:
+  tv_rw:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind,rw'
+      device: '/lutece/media/tv/'
+  sonarr_intake:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind,rw'
+      device: '/mnt/temp/lftp/sonarr'
+
+  lidarr_config:
+  music_rw:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind,rw'
+      device: '/lutece/media/music/'
+  lidarr_intake:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind,rw'
+      device: '/mnt/temp/lftp/lidarr'
+
+  jackett_config:
+  jacket_downloads:

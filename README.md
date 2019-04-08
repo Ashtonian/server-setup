@@ -28,11 +28,17 @@ This is a my homelab notes.
 - vs code
 - 1password
 - Docker, compose, swarm
+- enable ubuntu auto updates
+- mkvtools
+- lftp
+- delete ubuntu spam from store
 
 zfs:
 
 - /etc/default/zfs delay start
 - create data sets, update recordset size, enable compression
+- enable zed and test with scrub
+- import using dev-id verify with zpool status
 - take snapshot
 
 ```shell
@@ -80,6 +86,41 @@ sudo adduser --system --no-create-home --group --disabled-login --shell=/bin/fal
 sudo adduser --system --no-create-home --group --disabled-login --shell=/bin/false --uid 5002 tautulli
 
 sudo adduser --system --no-create-home --group --disabled-login --shell=/bin/false --uid 5003 ombi
+
+sudo adduser --system --no-create-home --group --disabled-login --shell=/bin/false --uid 5004 radarr
+sudo adduser --system --no-create-home --group --disabled-login --shell=/bin/false --uid 5005 sonarr
+sudo adduser --system --no-create-home --group --disabled-login --shell=/bin/false --uid 5006 lidarr
+sudo adduser --system --no-create-home --group --disabled-login --shell=/bin/false --uid 5007 jackett
+
+sudo adduser --system --no-create-home --group --disabled-login --shell=/bin/false --uid 5008 lftp
+
+sudo mkdir /mnt/temp/lftp
+sudo chmod o=rX,g=rwX,u=rwX -R /mnt/temp/lftp
+sudo chown lftp:lftp -R /mnt/temp/lftp
+
+sudo mkdir /mnt/temp/lftp/radarr
+sudo chmod o=rX,g=rwX,u=rwX -R /mnt/temp/lftp/radarr
+sudo chown radarr:lftp -R /mnt/temp/lftp/radarr
+
+sudo mkdir /mnt/temp/lftp/sonarr
+sudo chmod o=rX,g=rwX,u=rwX -R /mnt/temp/lftp/sonarr
+sudo chown radarr:lftp -R /mnt/temp/lftp/sonarr
+
+sudo mkdir /mnt/temp/lftp/lidarr
+sudo chmod o=rX,g=rwX,u=rwX -R /mnt/temp/lftp/lidarr
+sudo chown radarr:lftp -R /mnt/temp/lftp/lidarr
+
+sudo chmod o=rX,g=rwX,u=--- -R /lutece/media
+sudo chown :mediarw -R /lutece/media
+
+sudo chmod o=rX,g=rwX,u=rwX -R /lutece/media/movies
+sudo chown radarr:mediarw -R /lutece/media/movies
+
+sudo chmod o=rX,g=rwX,u=rwX -R /lutece/media/tv
+sudo chown sonarr:mediarw -R /lutece/media/tv
+
+sudo chmod o=rX,g=rwX,u=rwX -R /lutece/media/music
+sudo chown lidarr:mediarw -R /lutece/media/music
 
 sudo chmod o=rX,g=rwX,u=--- -R /lutece/apps/nextcloud
 sudo chown :nextcloud -R /lutece/apps/nextcloud
@@ -186,7 +227,13 @@ Manual:
 ```shell
 cd plex/
 #sudo docker stack deploy --compose-file=docker-compose.yml plex
-#sudo docker-compose up -d
+sudo docker-compose up -d # must use compose due to network issue with swarm? DNS issues
+```
+
+```shell
+cd dl/
+#sudo docker stack deploy --compose-file=docker-compose.yml plex
+sudo docker-compose up -d # must use compose due to network issue with swarm? DNS issues
 ```
 
 ### public
@@ -212,24 +259,18 @@ One Day Maybe
 
 - vpn
 - auto encrypt+backup
-- investigate syncthing, glances, external facing dashboard (muximux?), docker sec, smokeping, voip
-- script out initial installs and cert authorities
+- investigate glances, docker sec, smokeping, voip, qbit
 - internal proxy + dns + webmin cert + pfsense cert
-- jackett, sonarr, radarr, qbit ect
-- log rotation driver with limits
-
-TODO
-
-- https://hub.docker.com/r/linuxserver/unifi-controller
-- watchtower
-- volume map (plex media)
-- VERIFY plex HW acceleration map
-- ssh, sftp, network share
-
-Next
-
-- verify plex remote access
-- download stack
 - traefik rate limits https://docs.traefik.io/configuration/commons/#rate-limiting
 - traefik default 404 error behavior https://docs.traefik.io/v1.6/configuration/commons/#custom-error-pages
 - traefik security mailing for updates
+- https://hub.docker.com/r/linuxserver/unifi-controller
+
+Next
+
+- network share
+- watchtower
+- nextcloud finish
+- lidarr pipe verify
+- verify radarr,sonarr upgrade quality working
+- organizer

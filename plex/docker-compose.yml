@@ -33,7 +33,8 @@ services:
     volumes:
       - plex_config:/config
       - plex_tv:/data/tvshows:ro
-      - plex_movies:/data/movies:ro 
+      - plex_movies:/data/movies:ro
+      - plex_music:/data/music:ro
     labels:
       traefik.enable: "true"
       traefik.docker.network: "public"
@@ -92,7 +93,6 @@ services:
       PUID: 5003
       PGID: 5003
       TZ: America/Chicago
-      # HOST: *
     volumes:
       - ombi_config:/config
     ports:
@@ -123,6 +123,7 @@ networks:
 volumes:
   ombi_config:
   tautulli_config:
+  
   plex_tv:
     driver: local
     driver_opts:
@@ -136,6 +137,13 @@ volumes:
       type: 'none'
       o: 'bind,ro'
       device: '/lutece/media/movies/'
+
+  plex_music:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind,ro'
+      device: '/lutece/media/music/'
 
   plex_config:
     driver: local
