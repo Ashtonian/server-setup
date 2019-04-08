@@ -87,7 +87,11 @@ sudo adduser --system --no-create-home --group --disabled-login --shell=/bin/fal
 sudo chmod o=r,g=rwX,u=rwX -R /mnt/workspace/plex
 sudo chown plex:plex -R /mnt/workspace/plex
 
+sudo groupadd apps
+
 sudo adduser --system --no-create-home --group --disabled-login --shell=/bin/false --uid 5001 nextcloud
+sudo usermod -a -G apps nextcloud
+sudo chown :apps /lutece/apps/
 
 sudo adduser --system --no-create-home --group --disabled-login --shell=/bin/false --uid 5002 tautulli
 
@@ -104,6 +108,7 @@ sudo adduser --system --no-create-home --group --disabled-login --shell=/bin/fal
 sudo usermod -a -G lftp radarr # would be cool to not have to do this if lftp could respect parent dir permissions
 sudo usermod -a -G lftp sonarr
 sudo usermod -a -G lftp lidarr
+
 
 
 sudo mkdir /mnt/temp/lftp
@@ -281,6 +286,7 @@ One Day Maybe
 
 Next
 
+- redis ui
 - network share
 - watchtower
 - delete cleanup script for after download
