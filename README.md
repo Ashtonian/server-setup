@@ -91,8 +91,10 @@ sudo adduser --system --no-create-home --group --disabled-login --shell=/bin/fal
 sudo adduser --system --no-create-home --group --disabled-login --shell=/bin/false --uid 5005 sonarr
 sudo adduser --system --no-create-home --group --disabled-login --shell=/bin/false --uid 5006 lidarr
 sudo adduser --system --no-create-home --group --disabled-login --shell=/bin/false --uid 5007 jackett
+sudo adduser --system --no-create-home --group --disabled-login --shell=/bin/false --uid 5009 organizr
 
 sudo adduser --system --no-create-home --group --disabled-login --shell=/bin/false --uid 5008 lftp
+
 
 sudo mkdir /mnt/temp/lftp
 sudo chmod o=rX,g=rwX,u=rwX -R /mnt/temp/lftp
@@ -204,6 +206,7 @@ docker swarm update --task-history-limit 2zs
 ```shell
 docker network create --driver=overlay --attachable public
 docker network create --driver=overlay --attachable dockersock
+docker network create --driver=overlay --attachable dl
 ```
 
 ### mgmt
