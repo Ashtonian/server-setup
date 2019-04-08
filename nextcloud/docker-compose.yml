@@ -78,6 +78,8 @@ services:
     image: nextcloud:apache
     logging: *default-logging
     restart: always
+    networks:
+      - nextcloud
     volumes:
       - nextcloud:/var/www/html
       - nexctcloud_config:/var/www/html/config
