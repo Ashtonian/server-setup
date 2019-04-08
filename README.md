@@ -102,6 +102,8 @@ sudo adduser --system --no-create-home --group --disabled-login --shell=/bin/fal
 sudo adduser --system --no-create-home --group --disabled-login --shell=/bin/false --uid 5008 lftp
 
 sudo usermod -a -G lftp radarr # would be cool to not have to do this if lftp could respect parent dir permissions
+sudo usermod -a -G lftp sonarr
+sudo usermod -a -G lftp lidarr
 
 
 sudo mkdir /mnt/temp/lftp
@@ -281,6 +283,4 @@ Next
 
 - network share
 - watchtower
-- nextcloud finish
-- lidarr pipe verify
-- fix/verify radarr,sonarr upgrade quality working
+- delete cleanup script for after download

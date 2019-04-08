@@ -36,6 +36,9 @@ services:
     volumes:
       - nextcloud:/var/www/html
       - nextcloud_data:/data
+      - nextcloud_tv:/tv:ro
+      - nextcloud_movies:/movies:ro
+      - nextcloud_music:/music:ro
     environment:
       MYSQL_PASSWORD: ${NC_DB_PASS}
       MYSQL_DATABASE: nextcloud
@@ -87,3 +90,24 @@ volumes:
       type: 'none'
       o: 'bind'
       device: ':/lutece/apps/nextcloud/'
+  
+  nextcloud_tv:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind,ro'
+      device: '/lutece/media/tv/'
+
+  nextcloud_movies:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind,ro'
+      device: '/lutece/media/movies/'
+
+  nextcloud_music:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind,ro'
+      device: '/lutece/media/music/'
