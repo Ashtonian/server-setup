@@ -52,6 +52,7 @@ sudo zfs set compression=lz4 lutece
 sudo zfs create lutece/media
 sudo zfs set recordsize=1m lutece/media
 sudo zfs create lutece/media/movies
+sudo zfs create lutece/media/movies4k
 sudo zfs create lutece/media/tv
 sudo zfs create lutece/media/pictures
 sudo zfs create lutece/media/books
@@ -132,6 +133,9 @@ sudo chown :mediarw -R /lutece/media
 
 sudo chmod o=rX,g=rwX,u=rwX -R /lutece/media/movies
 sudo chown radarr:mediarw -R /lutece/media/movies
+
+sudo chmod o=rX,g=rwX,u=rwX -R /lutece/media/movies4k
+sudo chown radarr:mediarw -R /lutece/media/movies4k
 
 sudo chmod o=rX,g=rwX,u=rwX -R /lutece/media/tv
 sudo chown sonarr:mediarw -R /lutece/media/tv
@@ -286,6 +290,10 @@ One Day Maybe
 
 Next
 
+- 4k uhd radarr + radarrsync
+- bazarr
+- flac to mp3
+- adjust quality profiles
 - redis ui
 - network share
 - watchtower

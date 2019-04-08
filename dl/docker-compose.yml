@@ -11,7 +11,6 @@ services:
   radarr:
     image: linuxserver/radarr
     logging: *default-logging
-    container_name: radarr
     networks:
       - dl
     environment:
@@ -22,6 +21,23 @@ services:
       - radarr_config:/config
       - movies_rw:/movies
       - radarr_intake:/downloads
+    ports:
+      - 7879:7878
+    restart: unless-stopped
+
+  radarr4k:
+    image: linuxserver/radarr
+    logging: *default-logging
+    networks:
+      - dl
+    environment:
+      PUID: 5004
+      PGID: 5004
+      TZ: America/Chicago
+    volumes:
+      - radarr4k_config:/config
+      - movies4k_rw:/movies
+      - radarr4k_intake:/downloads
     ports:
       - 7878:7878
     restart: unless-stopped
@@ -98,6 +114,20 @@ volumes:
       type: 'none'
       o: 'bind,rw'
       device: '/mnt/temp/lftp/radarr'
+
+  radarr4k_config:
+  movies4k_rw:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind,rw'
+      device: '/lutece/media/movies4k/'
+  radarr4k_intake:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind,rw'
+      device: '/mnt/temp/lftp/radarr4k'
 
   sonarr_config:
   tv_rw:
