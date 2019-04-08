@@ -77,9 +77,34 @@ services:
       replicas: 1
       placement:
         constraints: [node.role == manager]
+  
+  organizr:
+    image: organizrtools/organizr-v2
+    logging: *default-logging
+    environment:
+      PUID: 5009
+      PGID: 5009
+    ports:
+      - "9001:80"
+    volumes:
+      - organizr_config:/config
+    networks:
+      - portainer-net
+      - public
+      - dl
+      - visualizer
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
 
 networks:
   visualizer:
+  public:
+    external: true
+  dl:
+    external: true
   portainer-net:
     driver: overlay
     attachable: true
@@ -87,4 +112,5 @@ networks:
     external: true
 
 volumes:
+  organizr_config:
   portainer_data:

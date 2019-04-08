@@ -35,20 +35,34 @@ services:
     logging: *default-logging
     volumes:
       - nextcloud:/var/www/html
+      - nexctcloud_config:/var/www/html/config
+      - nexctcloud_custom_apps:/var/www/html/custom_apps
       - nextcloud_data:/data
+      - nextcloud_tv:/tv:ro
+      - nextcloud_movies:/movies:ro
+      - nextcloud_music:/music:ro
     environment:
-      MYSQL_PASSWORD: ${NC_DB_PASS}
-      MYSQL_DATABASE: nextcloud
-      MYSQL_USER: nextcloud
-      NEXTCLOUD_TRUSTED_DOMAINS: nextcloud.ashtonkinslow.com
-      REDIS_HOST: redis
-      NEXTCLOUD_DATA_DIR: /data
+       MYSQL_HOST: db
+       MYSQL_PASSWORD: ${NC_DB_PASS}
+       MYSQL_DATABASE: nextcloud
+       MYSQL_USER: nextcloud
+       NEXTCLOUD_TRUSTED_DOMAINS: nextcloud.ashtonkinslow.com
+       REDIS_HOST: redis
+       NEXTCLOUD_DATA_DIR: /data
+      # user: "5001:5001"
     depends_on:
       - db
       - redis
     networks:
       - nextcloud
       - public
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: "public"
+      traefik.backend: "nextcloud"
+      traefik.frontend.rule: "Host:nextcloud.ashtonkinslow.com"
+      traefik.port: "80"
+      traefik.protocol: "http"
     deploy:
       labels:
         traefik.enable: "true"
@@ -61,13 +75,13 @@ services:
         # traefik.frontend.whiteList.useXForwardedFor: "true"
 
   nextcloud-cron:
-    image: nextcloud:fpm-alpine
+    image: nextcloud:apache
     logging: *default-logging
-    networks:
-      - nextcloud
+    restart: always
     volumes:
       - nextcloud:/var/www/html
     entrypoint: /cron.sh
+    # user: "5001:5001"
     depends_on:
       - db
       - redis
@@ -81,9 +95,32 @@ volumes:
   redis:
   db:
   nextcloud:
+  nexctcloud_config:
+  nexctcloud_custom_apps:
   nextcloud_data:
     driver: local
     driver_opts:
       type: 'none'
-      o: 'bind'
-      device: ':/lutece/apps/nextcloud/'
+      o: 'bind,rw'
+      device: '/lutece/apps/nextcloud/'
+  
+  nextcloud_tv:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind,ro'
+      device: '/lutece/media/tv/'
+
+  nextcloud_movies:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind,ro'
+      device: '/lutece/media/movies/'
+
+  nextcloud_music:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind,ro'
+      device: '/lutece/media/music/'
