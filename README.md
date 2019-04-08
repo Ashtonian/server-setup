@@ -9,6 +9,12 @@ This is a my homelab notes.
 - webmin (:10000)
 - portainer (:9000)
 - docker visualizer (:8080)
+- organizer
+- jackett
+- lidarr
+- radarr
+- sonarr
+- tautulli
 
 ## External Devlierables
 
@@ -94,6 +100,8 @@ sudo adduser --system --no-create-home --group --disabled-login --shell=/bin/fal
 sudo adduser --system --no-create-home --group --disabled-login --shell=/bin/false --uid 5009 organizr
 
 sudo adduser --system --no-create-home --group --disabled-login --shell=/bin/false --uid 5008 lftp
+
+sudo usermod -a -G lftp radarr # would be cool to not have to do this if lftp could respect parent dir permissions
 
 
 sudo mkdir /mnt/temp/lftp
@@ -275,5 +283,4 @@ Next
 - watchtower
 - nextcloud finish
 - lidarr pipe verify
-- verify radarr,sonarr upgrade quality working
-- organizer
+- fix/verify radarr,sonarr upgrade quality working
