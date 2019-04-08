@@ -103,8 +103,12 @@ sudo adduser --system --no-create-home --group --disabled-login --shell=/bin/fal
 sudo adduser --system --no-create-home --group --disabled-login --shell=/bin/false --uid 5006 lidarr
 sudo adduser --system --no-create-home --group --disabled-login --shell=/bin/false --uid 5007 jackett
 sudo adduser --system --no-create-home --group --disabled-login --shell=/bin/false --uid 5009 organizr
+sudo adduser --system --no-create-home --group --disabled-login --shell=/bin/false --uid 5011 bazarr
+sudo usermod -a -G radarr,sonarr bazarr
+
 
 sudo adduser --system --no-create-home --group --disabled-login --shell=/bin/false --uid 5008 lftp
+
 
 sudo usermod -a -G lftp radarr # would be cool to not have to do this if lftp could respect parent dir permissions
 sudo usermod -a -G lftp sonarr
@@ -290,7 +294,7 @@ One Day Maybe
 
 Next
 
-- 4k uhd radarr + radarrsync
+- reg radarr settings + radarrsync + job
 - bazarr
 - flac to mp3
 - adjust quality profiles

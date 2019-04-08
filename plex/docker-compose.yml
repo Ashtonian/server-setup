@@ -1,10 +1,9 @@
 version: "3.7"
 
-x-logging:
-  &default-logging
+x-logging: &default-logging
   options:
-    max-size: '500m'
-    max-file: '5'
+    max-size: "500m"
+    max-file: "5"
   driver: json-file
 
 services:
@@ -34,6 +33,7 @@ services:
       - plex_config:/config
       - plex_tv:/data/tvshows:ro
       - plex_movies:/data/movies:ro
+      - plex_movies4k:/data/movies:ro
       - plex_music:/data/music:ro
     labels:
       traefik.enable: "true"
@@ -123,38 +123,45 @@ networks:
 volumes:
   ombi_config:
   tautulli_config:
-  
+
   plex_tv:
     driver: local
     driver_opts:
-      type: 'none'
-      o: 'bind,ro'
-      device: '/lutece/media/tv/'
+      type: "none"
+      o: "bind,ro"
+      device: "/lutece/media/tv/"
 
   plex_movies:
     driver: local
     driver_opts:
-      type: 'none'
-      o: 'bind,ro'
-      device: '/lutece/media/movies/'
+      type: "none"
+      o: "bind,ro"
+      device: "/lutece/media/movies/"
+
+  plex_movies4k:
+    driver: local
+    driver_opts:
+      type: "none"
+      o: "bind,ro"
+      device: "/lutece/media/movies4k/"
 
   plex_music:
     driver: local
     driver_opts:
-      type: 'none'
-      o: 'bind,ro'
-      device: '/lutece/media/music/'
+      type: "none"
+      o: "bind,ro"
+      device: "/lutece/media/music/"
 
   plex_config:
     driver: local
     driver_opts:
-      type: 'none'
-      o: 'bind,rw'
-      device: '/mnt/workspace/plex/'
+      type: "none"
+      o: "bind,rw"
+      device: "/mnt/workspace/plex/"
 
   plex_config_logs:
     driver: local
     driver_opts:
-      type: 'none'
-      o: 'bind,ro'
-      device: '/mnt/workspace/plex/Library/Application Support/Plex Media Server/Logs/'
+      type: "none"
+      o: "bind,ro"
+      device: "/mnt/workspace/plex/Library/Application Support/Plex Media Server/Logs/"

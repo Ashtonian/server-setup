@@ -95,12 +95,47 @@ services:
       - 9117:9117
     restart: unless-stopped
 
+  bazarr:
+    image: linuxserver/bazarr
+    logging: *default-logging
+    networks:
+      - dl
+    environment:
+      PUID: 5010
+      PGID: 5010
+      TZ: America/Chicago
+    volumes:
+      - bazarr_config:/config
+      - movies_rw:/movies
+      - tv_rw:/tv
+    ports:
+      - 6767:6767
+    restart: unless-stopped
+
+  bazarr4k:
+    image: linuxserver/bazarr
+    logging: *default-logging
+    networks:
+      - dl
+    environment:
+      PUID: 5010
+      PGID: 5010
+      TZ: America/Chicago
+    volumes:
+      - bazarr4k_config:/config
+      - movies4k_rw:/movies
+    ports:
+      - 6768:6767
+    restart: unless-stopped
+
 networks:
   dl:
     external: true
 
 
 volumes:
+  bazarr_config:
+  bazarr4k_config:
   radarr_config:
   movies_rw:
     driver: local

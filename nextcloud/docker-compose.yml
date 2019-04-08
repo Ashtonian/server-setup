@@ -1,10 +1,9 @@
 version: "3.7"
 
-x-logging:
-  &default-logging
+x-logging: &default-logging
   options:
-    max-size: '500m'
-    max-file: '5'
+    max-size: "500m"
+    max-file: "5"
   driver: json-file
 
 services:
@@ -40,15 +39,16 @@ services:
       - nextcloud_data:/data
       - nextcloud_tv:/tv:ro
       - nextcloud_movies:/movies:ro
+      - nextcloud_movies4k:/movies4k:ro
       - nextcloud_music:/music:ro
     environment:
-       MYSQL_HOST: db
-       MYSQL_PASSWORD: ${NC_DB_PASS}
-       MYSQL_DATABASE: nextcloud
-       MYSQL_USER: nextcloud
-       NEXTCLOUD_TRUSTED_DOMAINS: nextcloud.ashtonkinslow.com
-       REDIS_HOST: redis
-       NEXTCLOUD_DATA_DIR: /data
+      MYSQL_HOST: db
+      MYSQL_PASSWORD: ${NC_DB_PASS}
+      MYSQL_DATABASE: nextcloud
+      MYSQL_USER: nextcloud
+      NEXTCLOUD_TRUSTED_DOMAINS: nextcloud.ashtonkinslow.com
+      REDIS_HOST: redis
+      NEXTCLOUD_DATA_DIR: /data
       # user: "5001:5001"
     depends_on:
       - db
@@ -100,27 +100,34 @@ volumes:
   nextcloud_data:
     driver: local
     driver_opts:
-      type: 'none'
-      o: 'bind,rw'
-      device: '/lutece/apps/nextcloud/'
-  
+      type: "none"
+      o: "bind,rw"
+      device: "/lutece/apps/nextcloud/"
+
   nextcloud_tv:
     driver: local
     driver_opts:
-      type: 'none'
-      o: 'bind,ro'
-      device: '/lutece/media/tv/'
+      type: "none"
+      o: "bind,ro"
+      device: "/lutece/media/tv/"
 
   nextcloud_movies:
     driver: local
     driver_opts:
-      type: 'none'
-      o: 'bind,ro'
-      device: '/lutece/media/movies/'
+      type: "none"
+      o: "bind,ro"
+      device: "/lutece/media/movies/"
+
+  nextcloud_movies4k:
+    driver: local
+    driver_opts:
+      type: "none"
+      o: "bind,ro"
+      device: "/lutece/media/movies4k/"
 
   nextcloud_music:
     driver: local
     driver_opts:
-      type: 'none'
-      o: 'bind,ro'
-      device: '/lutece/media/music/'
+      type: "none"
+      o: "bind,ro"
+      device: "/lutece/media/music/"
