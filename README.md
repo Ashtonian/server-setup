@@ -295,8 +295,8 @@ One Day Maybe
 Next
 
 - reg radarr settings + radarrsync + job
-- bazarr
 - flac to mp3
+- post import cleanup https://github.com/jayrox/clnd
 - adjust quality profiles
 - redis ui
 - network share
