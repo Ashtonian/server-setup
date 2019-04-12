@@ -294,7 +294,10 @@ One Day Maybe
 
 Next
 
-- reg radarr settings + radarrsync + job
+- rm .rar files from lftp transfer
+- reg radarr settings + radarrsync + job + 4k lib transfer + plex file add
+- sonarr 4k support
+- batch https://github.com/budgidiere/batchtonemapping/blob/master/README.md 
 - flac to mp3
 - post import cleanup https://github.com/jayrox/clnd
 - adjust quality profiles
