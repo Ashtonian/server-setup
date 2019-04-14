@@ -1,0 +1,76 @@
+version: "3.7"
+
+x-logging: &default-logging
+  options:
+    max-size: "500m"
+    max-file: "5"
+  driver: json-file
+
+services:
+  nextcloud:
+    logging: *default-logging
+    image: linuxserver/nextcloud
+    container_name: nextcloud
+    environment:
+      PUID: 5001
+      PGID: 5001
+      TZ: America/Chicago
+      NEXTCLOUD_TRUSTED_DOMAINS: nextcloud.ashtonkinslow.com # not sure gets passed in 
+      NEXTCLOUD_DATA_DIR: /data # not sure gets passed in 
+    volumes:
+      - nextcloud:/var/www/html
+      - nexctcloud_config:/var/www/html/config
+      - nexctcloud_config2:/config # not sure if the same as /var/www/html/config
+      - nexctcloud_custom_apps:/var/www/html/custom_apps
+      - nextcloud_data:/data
+      - nextcloud_media:/ncmedia
+    # ports:
+    #   - 443:80
+    restart: unless-stopped
+    networks:
+      - nextcloud
+      - public
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: "public"
+      traefik.backend: "nextcloud"
+      traefik.frontend.rule: "Host:nextcloud.ashtonkinslow.com"
+      traefik.port: "80"
+      traefik.protocol: "http"
+    user: "5001:5001"
+    deploy:
+      labels:
+        traefik.enable: "true"
+        traefik.docker.network: "public"
+        traefik.backend: "nextcloud"
+        traefik.frontend.rule: "Host:nextcloud.ashtonkinslow.com"
+        traefik.port: "80"
+        traefik.protocol: "http"
+        # traefik.frontend.whiteList.sourceRange: 10.0.0.1/24
+        # traefik.frontend.whiteList.useXForwardedFor: "true"
+
+networks:
+  nextcloud:
+    driver: overlay
+  public:
+    external: true
+
+volumes:
+
+  nextcloud:
+  nexctcloud_config:
+  nexctcloud_config2:
+  nexctcloud_custom_apps:
+  nextcloud_data:
+    driver: local
+    driver_opts:
+      type: "none"
+      o: "bind,rw"
+      device: "/lutece/apps/nextcloud/"
+
+  nextcloud_media:
+    driver: local
+    driver_opts:
+      type: "none"
+      o: "bind,ro"
+      device: "/lutece/media/"

@@ -26,8 +26,8 @@ services:
     environment:
       PUID: 5000
       PGID: 5000
+      TZ: America/Chicago
       VERSION: public
-      -e VERSION=latest
     devices:
       - /dev/dri:/dev/dri
     volumes:

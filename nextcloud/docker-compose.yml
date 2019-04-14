@@ -50,7 +50,6 @@ services:
       NEXTCLOUD_TRUSTED_DOMAINS: nextcloud.ashtonkinslow.com
       REDIS_HOST: redis
       NEXTCLOUD_DATA_DIR: /data
-      # user: "5001:5001"
     depends_on:
       - db
       - redis
@@ -64,6 +63,7 @@ services:
       traefik.frontend.rule: "Host:nextcloud.ashtonkinslow.com"
       traefik.port: "80"
       traefik.protocol: "http"
+    user: "5001:5001"
     deploy:
       labels:
         traefik.enable: "true"
@@ -85,11 +85,12 @@ services:
       - nextcloud:/var/www/html
       - nexctcloud_config:/var/www/html/config
       - nexctcloud_custom_apps:/var/www/html/custom_apps
+    user: "5001:5001"
     entrypoint: /cron.sh
-    # user: "5001:5001"
     depends_on:
       - db
       - redis
+    deploy:
 
 networks:
   nextcloud:
