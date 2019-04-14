@@ -99,6 +99,25 @@ services:
       placement:
         constraints: [node.role == manager]
 
+  watchtower:
+    image: v2tec/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 86400
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+
+  # volumebackup:
+  #   image: osixia/backup
+  #   volume: 
+  #     - docker_volumes:/data/input:ro
+  #     - volumes_backup:/data/backup 
+  #   enviornment: 
+  #     - BACKUP_CRON_EXP="* * 14 * * "
+
 networks:
   visualizer:
   public:

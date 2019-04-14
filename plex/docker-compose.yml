@@ -27,13 +27,15 @@ services:
       PUID: 5000
       PGID: 5000
       VERSION: public
+      -e VERSION=latest
     devices:
       - /dev/dri:/dev/dri
     volumes:
       - plex_config:/config
       - plex_tv:/data/tvshows:ro
+      - plex_tv4k:/data/tvshows4k:ro
       - plex_movies:/data/movies:ro
-      - plex_movies4k:/data/movies:ro
+      - plex_movies4k:/data/movies4k:ro
       - plex_music:/data/music:ro
     labels:
       traefik.enable: "true"
@@ -130,6 +132,13 @@ volumes:
       type: "none"
       o: "bind,ro"
       device: "/lutece/media/tv/"
+
+  plex_tv4k:
+    driver: local
+    driver_opts:
+      type: "none"
+      o: "bind,ro"
+      device: "/lutece/media/tv4k/"
 
   plex_movies:
     driver: local

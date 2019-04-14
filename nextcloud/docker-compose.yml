@@ -38,6 +38,7 @@ services:
       - nexctcloud_custom_apps:/var/www/html/custom_apps
       - nextcloud_data:/data
       - nextcloud_tv:/tv:ro
+      - nextcloud_tv4k:/tv:ro
       - nextcloud_movies:/movies:ro
       - nextcloud_movies4k:/movies4k:ro
       - nextcloud_music:/music:ro
@@ -115,6 +116,13 @@ volumes:
       type: "none"
       o: "bind,ro"
       device: "/lutece/media/tv/"
+  
+  nextcloud_tv4k:
+    driver: local
+    driver_opts:
+      type: "none"
+      o: "bind,ro"
+      device: "/lutece/media/tv4k/"
 
   nextcloud_movies:
     driver: local
