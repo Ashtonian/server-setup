@@ -26,11 +26,32 @@ services:
       placement:
         constraints: [node.role == manager]
 
+  unifi-controller:
+    image: linuxserver/unifi-controller
+    container_name: unifi-controller
+    environment:
+      PUID: 5013
+      PGID: 5013
+    volumes:
+      - unifi_config:/config
+    ports:
+      - 3478:3478/udp
+      - 10001:10001/udp
+      - 8080:8080
+      - 8081:8081
+      - 8443:8443
+      - 8843:8843
+      - 8880:8880
+      - 6789:6789
+    networks: 
+      - public
+    restart: unless-stopped
+
   visualizer:
     image: dockersamples/visualizer:stable
     logging: *default-logging
     ports:
-      - "8080:8080"
+      - "8980:8080"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock" # Sekurity - if exposing to public one day should at the very least proxy..
     deploy:
@@ -133,3 +154,4 @@ networks:
 volumes:
   organizr_config:
   portainer_data:
+  unifi_config: 
