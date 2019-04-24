@@ -19,7 +19,7 @@ else
     set mirror:use-pget-n 5
     set xfer:use-temp-file yes
     set xfer:temp-file-name *.lftp
-    mirror  --Remove-source-dirs --loop --no-perms -c -P5 --log="/mnt/temp/$base_name.log" "$remote_dir" "$local_dir"
+    mirror --exclude-glob "\.(?:rar|r\d\d|\d\d\d)$" --Remove-source-dirs --loop --no-perms -c -P5 --log="/mnt/temp/$base_name.log" "$remote_dir" "$local_dir"
     quit
 EOF
     rm -f "$lock_file"
@@ -28,4 +28,4 @@ EOF
 fi
 
 
-# --exclude-glob "\.(?:rar|r\d\d|\d\d\d)$"  unused due to rtorrent settings
+#  unused due to rtorrent settings
