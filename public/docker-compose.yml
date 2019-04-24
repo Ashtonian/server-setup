@@ -52,6 +52,8 @@ services:
       # - "--docker.swarmMode"
       # - "--docker.domain=mydomain.ca"
       - "--docker.watch"
+      - "--insecureSkipVerify=true"
+      
 
 networks:
   public:

@@ -8,6 +8,7 @@ x-logging: &default-logging
 
 services:
   nextcloud:
+    restart: always
     logging: *default-logging
     image: linuxserver/nextcloud
     container_name: nextcloud
@@ -15,7 +16,7 @@ services:
       PUID: 5001
       PGID: 5001
       TZ: America/Chicago
-      NEXTCLOUD_TRUSTED_DOMAINS: nextcloud.ashtonkinslow.com # not sure gets passed in 
+     # NEXTCLOUD_TRUSTED_DOMAINS: nextcloud.ashtonkinslow.com # not sure gets passed in 
       NEXTCLOUD_DATA_DIR: /data # not sure gets passed in 
     volumes:
       - nextcloud:/var/www/html
@@ -24,28 +25,27 @@ services:
       - nexctcloud_custom_apps:/var/www/html/custom_apps
       - nextcloud_data:/data
       - nextcloud_media:/ncmedia
-    # ports:
-    #   - 443:80
     restart: unless-stopped
     networks:
       - nextcloud
       - public
     labels:
+      traefik.insecureSkipVerify: "true"
       traefik.enable: "true"
       traefik.docker.network: "public"
       traefik.backend: "nextcloud"
       traefik.frontend.rule: "Host:nextcloud.ashtonkinslow.com"
-      traefik.port: "80"
-      traefik.protocol: "http"
-    user: "5001:5001"
+      traefik.port: "443"
+      traefik.protocol: "https"
     deploy:
       labels:
         traefik.enable: "true"
+        traefik.insecureSkipVerify: "true"
         traefik.docker.network: "public"
         traefik.backend: "nextcloud"
         traefik.frontend.rule: "Host:nextcloud.ashtonkinslow.com"
-        traefik.port: "80"
-        traefik.protocol: "http"
+        traefik.port: "443"
+        traefik.protocol: "https"
         # traefik.frontend.whiteList.sourceRange: 10.0.0.1/24
         # traefik.frontend.whiteList.useXForwardedFor: "true"
 
