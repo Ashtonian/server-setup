@@ -7,12 +7,34 @@ x-logging: &default-logging
   driver: json-file
 
 services:
+  db:
+    restart: always
+    logging: *default-logging
+    image: postgres
+    networks:
+      - nextcloud
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: ${NC_PG_PASS}
+      POSTGRES_USER: postgres
+      PUID: 5001
+      PGID: 5001
+      TZ: America/Chicago
+
   nextcloud:
     restart: always
     logging: *default-logging
     image: linuxserver/nextcloud
     container_name: nextcloud
     environment:
+      NEXTCLOUD_ADMIN_USER: ashtonian
+      NEXTCLOUD_ADMIN_PASSWORD: ${NC_ADMIN}
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${NC_PG_PASS}
+      POSTGRES_HOST: db
       PUID: 5001
       PGID: 5001
       TZ: America/Chicago
