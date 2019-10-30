@@ -78,7 +78,7 @@ networks:
     external: true
 
 volumes:
-
+  postgres:
   nextcloud:
   nexctcloud_config:
   nexctcloud_config2:
