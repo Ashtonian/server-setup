@@ -20,8 +20,12 @@ services:
       - VIRTUAL_PORT=80
       # - LETSENCRYPT_HOST=gitlab.ashtonkinslow.com,${REGISTRY_HOST}
       # - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
-    ports:
+    # ports:
+    #   - 80:80
       # - ${GITLAB_SSH_IP}:${GITLAB_SSH_PORT}:22
+    expose:
+      - 443/tcp
+      - 80/tcp
     volumes:
       - gitlab_config:/etc/gitlab'
       - gitlab_logs:/var/log/gitlab'
