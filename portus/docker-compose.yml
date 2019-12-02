@@ -65,7 +65,7 @@ services:
   #     - portus
 
   db:
-    image: library/mariadb:10.4
+    image: library/mariadb:10.0.33
     command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci --init-connect='SET NAMES UTF8;' --innodb-flush-log-at-trx-commit=0
     env_file:
       - ./portus.env
