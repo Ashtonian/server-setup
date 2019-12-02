@@ -57,7 +57,6 @@ services:
       - 443/tcp
       - 80/tcp
     volumes:
-      - gitlab_srv_config:/srv/gitlab/config
       - gitlab_config:/etc/gitlab'
       - gitlab_logs:/var/log/gitlab'
       - gitlab_data:/var/opt/gitlab
@@ -67,6 +66,11 @@ services:
     networks:
       - internal_network
       - public
+    configs:
+      - source: gitlab
+        target: /omnibus_config.rb
+    secrets:
+      - gitlab_root_password
     labels:
       traefik.enable: "true"
       traefik.docker.network: "public"
@@ -151,7 +155,6 @@ services:
     # https://github.com/docker-library/docs/tree/master/postgres#environment-variables=
     logging: *default-logging
     environment:
-
       - POSTGRES_DB=gitlabhq_production
     volumes:
       - postgres:/var/lib/postgresql/data
@@ -187,3 +190,10 @@ volumes:
   gitlab_config:
   gitlab_runner:
   gitlab_srv_config:
+
+configs:
+  gitlab:
+    file: ./gitlab.rb
+secrets:
+  gitlab_root_password:
+    file: ./root_password.txt
