@@ -73,7 +73,7 @@ services:
     volumes:
       - secrets:/certificates:ro
     networks:
-  #     - portus
+      - portus
 
   db:
     image: library/mariadb:10.0.33
