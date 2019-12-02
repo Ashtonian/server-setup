@@ -9,7 +9,7 @@ x-logging:
 
 services:
   gitlab:
-    image: gitlab/gitlab-ce:12.4
+    image: gitlab/gitlab-ce:12.4.5-ce.0
     restart: always
     container_name: gitlab
     hostname: "gitlab.ashtonkinslow.com"
@@ -54,7 +54,7 @@ services:
         traefik.protocol: "http"
 
   pages:
-    image: gitlab/gitlab-ce:12.4
+    image: gitlab/gitlab-ce:12.4.5-ce.0
     restart: always
     container_name: gitlab_pages
     hostname: pages.ashtonkinslow.com
@@ -102,7 +102,7 @@ services:
         traefik.protocol: "http"
 
   runner:
-    image: gitlab/gitlab-runner:12.4
+    image: gitlab/gitlab-runner:12.4.5-ce.0
     restart: always
     container_name: gitlab_runner
     logging: *default-logging
