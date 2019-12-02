@@ -49,11 +49,22 @@ services:
       - portus
       - db
     environment:
+      # Theoretically not needed, but cconfig's been buggy on this...
       - CCONFIG_PREFIX=PORTUS
+      - PORTUS_MACHINE_FQDN_VALUE=${MACHINE_FQDN}
+
+      # DB. The password for the database should definitely not be here. You are
+      # probably better off with Docker Swarm secrets.
       - PORTUS_DB_HOST=db
       - PORTUS_DB_DATABASE=portus_production
+      - PORTUS_DB_PASSWORD=${DATABASE_PASSWORD}
       - PORTUS_DB_POOL=5
+
+      # Secrets. It can possibly be handled better with Swarm's secrets.
+      - PORTUS_SECRET_KEY_BASE=${SECRET_KEY_BASE}
       - PORTUS_KEY_PATH=/certificates/portus.key
+      - PORTUS_PASSWORD=${PORTUS_PASSWORD}
+
       - PORTUS_BACKGROUND=true
     links:
       - db
@@ -62,7 +73,7 @@ services:
     volumes:
       - secrets:/certificates:ro
     networks:
-      - portus
+  #     - portus
 
   db:
     image: library/mariadb:10.0.33
@@ -71,6 +82,7 @@ services:
       - ./portus.env
     environment:
       - MYSQL_DATABASE=portus_production
+      - MYSQL_ROOT_PASSWORD=${DATABASE_PASSWORD}
     volumes:
       - mariadb:/var/lib/mysql
     networks:
@@ -82,6 +94,9 @@ services:
       - ./portus.env
     environment:
       # Authentication
+      REGISTRY_AUTH_TOKEN_REALM: http://${MACHINE_FQDN}:3000/v2/token
+      REGISTRY_AUTH_TOKEN_SERVICE: ${MACHINE_FQDN}:5000
+      REGISTRY_AUTH_TOKEN_ISSUER: ${MACHINE_FQDN}
       REGISTRY_AUTH_TOKEN_ROOTCERTBUNDLE: /secrets/portus.crt
 
       # Portus endpoint
