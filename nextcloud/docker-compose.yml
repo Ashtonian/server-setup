@@ -56,24 +56,24 @@ services:
     networks:
       - nextcloud
       - public
-    labels:
-      traefik.enable: "true"
-      traefik.docker.network: "public"
-      traefik.backend: "nextcloud"
-      traefik.frontend.rule: "Host:nextcloud.ashtonkinslow.com"
-      traefik.port: "80"
-      traefik.protocol: "http"
-    user: "5001:5001"
-    deploy:
-      labels:
-        traefik.enable: "true"
-        traefik.docker.network: "public"
-        traefik.backend: "nextcloud"
-        traefik.frontend.rule: "Host:nextcloud.ashtonkinslow.com"
-        traefik.port: "80"
-        traefik.protocol: "http"
-        # traefik.frontend.whiteList.sourceRange: 10.0.0.1/24
-        # traefik.frontend.whiteList.useXForwardedFor: "true"
+    # labels:
+    #   traefik.enable: "true"
+    #   traefik.docker.network: "public"
+    #   traefik.backend: "nextcloud"
+    #   traefik.frontend.rule: "Host:nextcloud.ashtonkinslow.com"
+    #   traefik.port: "80"
+    #   traefik.protocol: "http"
+    # user: "5001:5001"
+    # deploy:
+    #   labels:
+    #     traefik.enable: "true"
+    #     traefik.docker.network: "public"
+    #     traefik.backend: "nextcloud"
+    #     traefik.frontend.rule: "Host:nextcloud.ashtonkinslow.com"
+    #     traefik.port: "80"
+    #     traefik.protocol: "http"
+    # traefik.frontend.whiteList.sourceRange: 10.0.0.1/24
+    # traefik.frontend.whiteList.useXForwardedFor: "true"
 
   nextcloud-cron:
     image: nextcloud:apache
@@ -117,7 +117,7 @@ volumes:
       type: "none"
       o: "bind,ro"
       device: "/lutece/media/tv/"
-  
+
   nextcloud_tv4k:
     driver: local
     driver_opts:

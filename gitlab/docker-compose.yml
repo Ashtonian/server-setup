@@ -1,0 +1,155 @@
+version: '3.7'
+
+x-logging:
+  &default-logging
+  options:
+    max-size: '500m'
+    max-file: '5'
+  driver: json-file
+
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:12.5
+    restart: always
+    container_name: gitlab
+    hostname: "gitlab.ashtonkinslow.com"
+    logging: *default-logging
+    environment:
+      - TZ=America/Chicago
+      - VIRTUAL_HOST=gitlab.ashtonkinslow.com
+      - VIRTUAL_PORT=80
+      # - LETSENCRYPT_HOST=gitlab.ashtonkinslow.com,${REGISTRY_HOST}
+      # - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
+    ports:
+      # - ${GITLAB_SSH_IP}:${GITLAB_SSH_PORT}:22
+    volumes:
+      - gitlab_config:/etc/gitlab'
+      - gitlab_logs:/var/log/gitlab'
+      - gitlab_data:/var/opt/gitlab
+    depends_on:
+      - redis
+      - postgres
+    networks:
+      - internal_network
+      - public
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: "public"
+      traefik.backend: "gitlab"
+      traefik.frontend.rule: "Host:gitlab.ashtonkinslow.com"
+      traefik.port: "80"
+      traefik.protocol: "http"
+    user: "5001:5001"
+    deploy:
+      labels:
+        traefik.enable: "true"
+        traefik.docker.network: "public"
+        traefik.backend: "gitlab"
+        traefik.frontend.rule: "Host:gitlab.ashtonkinslow.com"
+        traefik.port: "80"
+        traefik.protocol: "http"
+
+  pages:
+    image: gitlab/gitlab-ce:12.5
+    restart: always
+    container_name: gitlab_pages
+    hostname: pages.ashtonkinslow.com
+    logging: *default-logging
+    environment:
+      - TZ=America/Chicago
+      - VIRTUAL_HOST=pages.ashtonkinslow.com,*.pages.ashtonkinslow.com
+      - VIRTUAL_PORT=8090
+      - HTTPS_METHOD=nohttps
+      # - LETSENCRYPT_HOST=${PAGES_HOST}
+      # - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
+    expose:
+      - 8090/tcp
+    entrypoint:
+      - /opt/gitlab/embedded/bin/gitlab-pages
+    command:
+      - -listen-proxy
+      - "0.0.0.0:8090"
+      - -pages-domain
+      - pages.ashtonkinslow.com
+      - -pages-root
+      - "/var/opt/gitlab/gitlab-rails/shared/pages"
+    volumes:
+      - gitlab_pages:/var/opt/gitlab/gitlab-pages:rw'
+      # - './volumes/data/gitlab-rails/shared/pages:/var/opt/gitlab/gitlab-rails/shared/pages:ro'
+      - gitlab_data:/var/opt/gitlab
+    networks:
+      - internal_network
+      - public
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: "public"
+      traefik.backend: "pages"
+      traefik.frontend.rule: "Host:pages.ashtonkinslow.com"
+      traefik.port: "8090"
+      traefik.protocol: "http"
+    user: "5001:5001"
+    deploy:
+      labels:
+        traefik.enable: "true"
+        traefik.docker.network: "public"
+        traefik.backend: "pages"
+        traefik.frontend.rule: "Host:pages.ashtonkinslow.com"
+        traefik.port: "8090"
+        traefik.protocol: "http"
+
+  runner:
+    image: gitlab/gitlab-runner:12.5
+    restart: always
+    container_name: gitlab_runner
+    logging: *default-logging
+    environment:
+      - CI_SERVER_URL=https://gitlab.ashtonkinslow.com/
+    volumes:
+      - gitlab_runner:/etc/gitlab-runner
+      - /var/run/docker.sock:/var/run/docker.sock:rw
+    deploy:
+      mode: replicated
+      replicas: 4
+
+  postgres:
+    image: postgres:10
+    restart: always
+    container_name: gitlab_postgresql
+    # https://github.com/docker-library/docs/tree/master/postgres#environment-variables=
+    logging: *default-logging
+    environment:
+      - POSTGRES_USER=gitlab
+      - POSTGRES_DB=gitlabhq_production
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - internal_network
+
+  redis:
+    image: redis:5
+    restart: always
+    container_name: gitlab_redis
+    logging: *default-logging
+    command:
+      - --loglevel warning
+    volumes:
+      - redis:/var/lib/redis
+    restart: always
+    networks:
+      - internal_network
+
+networks:
+  public:
+    external: true
+  internal_network:
+    internal: true
+
+volumes:
+  postgres:
+  redis:
+  gitlab_runner:
+  gitlab_data:
+  gitlab_logs:
+  gitlab_pages:
+  gitlab_config:
