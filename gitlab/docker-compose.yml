@@ -114,7 +114,7 @@ services:
     volumes:
       - gitlab_pages:/var/opt/gitlab/gitlab-pages:rw'
       # - './volumes/data/gitlab-rails/shared/pages:/var/opt/gitlab/gitlab-rails/shared/pages:ro'
-      - gitlab_data:/var/opt/gitlab
+      - gitlab_data2:/var/opt/gitlab
     networks:
       - internal_network
       - public
@@ -185,6 +185,7 @@ volumes:
   postgres:
   redis:
   gitlab_data:
+  gitlab_data2:
   gitlab_logs:
   gitlab_pages:
   gitlab_config:
