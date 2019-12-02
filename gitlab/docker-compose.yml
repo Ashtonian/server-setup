@@ -8,6 +8,8 @@ x-logging:
   driver: json-file
 
 services:
+        # docker run --rm -t -i -v gitlab_runner:/etc/gitlab-runner gitlab/gitlab-runner register
+
         # This fixes a permissions issue with starting gitlab on a fresh docker install..
         # gitlabperm:
         #   image: gitlab/gitlab-ee:12.4.5-ee.0
@@ -136,9 +138,10 @@ services:
       - CI_SERVER_URL=https://gitlab.ashtonkinslow.com/
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:rw
+      - gitlab-runner:/etc/gitlab-runner
     deploy:
       mode: replicated
-      replicas: 4
+      replicas: 1
 
   postgres:
     image: postgres:10
@@ -181,3 +184,4 @@ volumes:
   gitlab_logs:
   gitlab_pages:
   gitlab_config:
+  gitlab_runner:
