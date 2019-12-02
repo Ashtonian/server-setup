@@ -57,6 +57,7 @@ services:
       - 443/tcp
       - 80/tcp
     volumes:
+      - gitlab_srv_config:/srv/gitlab/config
       - gitlab_config:/etc/gitlab'
       - gitlab_logs:/var/log/gitlab'
       - gitlab_data:/var/opt/gitlab
@@ -185,3 +186,4 @@ volumes:
   gitlab_pages:
   gitlab_config:
   gitlab_runner:
+  gitlab_srv_config:
