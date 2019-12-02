@@ -102,7 +102,7 @@ services:
         traefik.protocol: "http"
 
   runner:
-    image: gitlab/gitlab-runner:12.4.5-ce.0
+    image: gitlab/gitlab-runner:v12.5.0
     restart: always
     container_name: gitlab_runner
     logging: *default-logging
