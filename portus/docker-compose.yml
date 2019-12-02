@@ -30,7 +30,7 @@ services:
     labels:
       traefik.enable: "true"
       traefik.docker.network: "public"
-      traefik.backend: "ombi"
+      traefik.backend: "portus"
       traefik.frontend.rule: "Host:portus.ashtonkinslow.com"
       traefik.port: "3000"
       traefik.protocol: "http"
@@ -38,7 +38,7 @@ services:
       labels:
         traefik.enable: "true"
         traefik.docker.network: "public"
-        traefik.backend: "ombi"
+        traefik.backend: "portus"
         traefik.frontend.rule: "Host:portus.ashtonkinslow.com"
         traefik.port: "3000"
         traefik.protocol: "http"

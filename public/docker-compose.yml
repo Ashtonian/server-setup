@@ -26,9 +26,9 @@ services:
       - "80:80"
       - "443:443"
       - "8183:8080"
-    image: traefik:latest
+    image: traefik:1.7
     logging: *default-logging
-    volumes: 
+    volumes:
       - traefik_certs:/certs
     networks:
       - public
@@ -53,7 +53,6 @@ services:
       # - "--docker.domain=mydomain.ca"
       - "--docker.watch"
       - "--insecureSkipVerify=true"
-      
 
 networks:
   public:
