@@ -3,9 +3,9 @@ version: "3.7"
 services:
   drone-server:
     image: drone/drone:1.6
-    ports:
-      - 8000:80
-      - 9000:9000
+    # ports:
+    #   - 8000:80
+    #   - 9000:9000
     networks:
       - drone
       - public
