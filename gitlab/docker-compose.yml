@@ -8,7 +8,38 @@ x-logging:
   driver: json-file
 
 services:
+   gitlabperm:
+
+    image: gitlab/gitlab-ce:12.4.5-ce.0
+    logging: *default-logging
+    command:
+      - "gitlab"
+      - "update-permissions"
+    volumes:
+      - gitlab_config:/etc/gitlab'
+      - gitlab_logs:/var/log/gitlab'
+      - gitlab_data:/var/opt/gitlab
+
+
+  # docker-proxy:
+  #   image: tecnativa/docker-socket-proxy
+  #   logging: *default-logging
+  #   networks:
+  #     - dockersock
+  #   environment:
+  #     CONTAINERS: 1
+  #     NETWORKS: 1
+  #     SERVICES: 1
+  #     SWARM: 1
+  #     TASKS: 1
+  #   volumes:
+  #     - "/var/run/docker.sock:/var/run/docker.sock"
+  #   deploy:
+  #     placement:
+  #       constraints: [node.role == manager]
+
   gitlab:
+
     image: gitlab/gitlab-ce:12.4.5-ce.0
     restart: always
     container_name: gitlab
@@ -43,7 +74,6 @@ services:
       traefik.frontend.rule: "Host:gitlab.ashtonkinslow.com"
       traefik.port: "80"
       traefik.protocol: "http"
-    user: "5001:5001"
     deploy:
       labels:
         traefik.enable: "true"
@@ -91,7 +121,6 @@ services:
       traefik.frontend.rule: "Host:pages.ashtonkinslow.com"
       traefik.port: "8090"
       traefik.protocol: "http"
-    user: "5001:5001"
     deploy:
       labels:
         traefik.enable: "true"
@@ -109,7 +138,6 @@ services:
     environment:
       - CI_SERVER_URL=https://gitlab.ashtonkinslow.com/
     volumes:
-      - gitlab_runner:/etc/gitlab-runner
       - /var/run/docker.sock:/var/run/docker.sock:rw
     deploy:
       mode: replicated
@@ -122,7 +150,7 @@ services:
     # https://github.com/docker-library/docs/tree/master/postgres#environment-variables=
     logging: *default-logging
     environment:
-      - POSTGRES_USER=gitlab
+
       - POSTGRES_DB=gitlabhq_production
     volumes:
       - postgres:/var/lib/postgresql/data
@@ -152,7 +180,6 @@ networks:
 volumes:
   postgres:
   redis:
-  gitlab_runner:
   gitlab_data:
   gitlab_logs:
   gitlab_pages:
