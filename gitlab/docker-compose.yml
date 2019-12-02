@@ -69,8 +69,8 @@ services:
     # configs:
     #   - source: gitlab
     #     target: /omnibus_config.rb
-    secrets:
-      - gitlab_root_password
+    # secrets:
+    #   - gitlab_root_password
     labels:
       traefik.enable: "true"
       traefik.docker.network: "public"
