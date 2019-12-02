@@ -8,8 +8,7 @@ x-logging:
   driver: json-file
 
 services:
-   gitlabperm:
-
+  gitlabperm:
     image: gitlab/gitlab-ce:12.4.5-ce.0
     logging: *default-logging
     command:
@@ -20,23 +19,21 @@ services:
       - gitlab_logs:/var/log/gitlab'
       - gitlab_data:/var/opt/gitlab
 
-
-  # docker-proxy:
-  #   image: tecnativa/docker-socket-proxy
-  #   logging: *default-logging
-  #   networks:
-  #     - dockersock
-  #   environment:
-  #     CONTAINERS: 1
-  #     NETWORKS: 1
-  #     SERVICES: 1
-  #     SWARM: 1
-  #     TASKS: 1
-  #   volumes:
-  #     - "/var/run/docker.sock:/var/run/docker.sock"
-  #   deploy:
-  #     placement:
-  #       constraints: [node.role == manager]
+        #   image: tecnativa/docker-socket-proxy
+        #   logging: *default-logging
+        #   networks:
+        #     - dockersock
+        #   environment:
+        #     CONTAINERS: 1
+        #     NETWORKS: 1
+        #     SERVICES: 1
+        #     SWARM: 1
+        #     TASKS: 1
+        #   volumes:
+        #     - "/var/run/docker.sock:/var/run/docker.sock"
+        #   deploy:
+        #     placement:
+        #       constraints: [node.role == manager]
 
   gitlab:
 
