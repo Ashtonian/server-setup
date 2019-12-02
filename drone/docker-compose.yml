@@ -27,7 +27,7 @@ services:
       traefik.docker.network: "public"
       traefik.backend: "drone"
       traefik.frontend.rule: "Host:drone.ashtonkinslow.com"
-      traefik.port: "9000"
+      traefik.port: "80"
       traefik.protocol: "http"
     deploy:
       labels:
@@ -35,7 +35,7 @@ services:
         traefik.docker.network: "public"
         traefik.backend: "drone"
         traefik.frontend.rule: "Host:drone.ashtonkinslow.com"
-        traefik.port: "9000"
+        traefik.port: "80"
         traefik.protocol: "http"
 
   drone-agent:
