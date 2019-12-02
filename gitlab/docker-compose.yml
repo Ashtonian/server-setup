@@ -66,9 +66,9 @@ services:
     networks:
       - internal_network
       - public
-    configs:
-      - source: gitlab
-        target: /omnibus_config.rb
+    # configs:
+    #   - source: gitlab
+    #     target: /omnibus_config.rb
     secrets:
       - gitlab_root_password
     labels:
@@ -185,16 +185,21 @@ volumes:
   postgres:
   redis:
   gitlab_data:
+  gitlab_config:
+    driver: local
+    driver_opts:
+      type: "none"
+      o: "bind,rw"
+      device: "/mnt/workspace/gitlab/config"
   gitlab_data2:
   gitlab_logs:
   gitlab_pages:
-  gitlab_config:
   gitlab_runner:
   gitlab_srv_config:
 
-configs:
-  gitlab:
-    file: ./gitlab.rb
-secrets:
-  gitlab_root_password:
-    file: ./root_password.txt
+# configs:
+#   gitlab:
+#     file: ./gitlab.rb
+# secrets:
+#   gitlab_root_password:
+#     file: ./root_password.txt
