@@ -1,4 +1,4 @@
 .env.production
 
 root_password.txt
-.env
+*.env
