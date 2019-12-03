@@ -92,59 +92,59 @@ services:
       # - DRONE_UI_PASSWORD=root
       - DRONE_RUNNER_CAPACITY=10
 
-  # drone-agent2:
-  #   logging: *default-logging
-  #   image: drone/agent:1.6
-  #   command: agent
-  #   restart: always
-  #   depends_on:
-  #     - drone-server
-  #   # ports:
-  #   #   - 3000:9009
-  #   networks:
-  #     - drone
-  #   volumes:
-  #     - /var/run/docker.sock:/var/run/docker.sock
-  #   env_file:
-  #     - ./drone.env
-  #   environment:
-  #     - DRONE_RUNNER_NAME=bob
-  #     - DRONE_LOGS_DEBUG=true
-  #     - DRONE_LOGS_TRACE=true
-  #     - DRONE_RPC_DUMP_HTTP=true
-  #     - DRONE_RPC_DUMP_HTTP_BODY=true
-  #     - DRONE_RPC_SERVER=http://drone-server:80
-  #     # - DRONE_UI_DISABLE=false
-  #     # - DRONE_UI_USERNAME=root
-  #     # - DRONE_UI_PASSWORD=root
-  #     - DRONE_RUNNER_CAPACITY=10
+  drone-agent2:
+    logging: *default-logging
+    image: drone/agent:1.6
+    command: agent
+    restart: always
+    depends_on:
+      - drone-server
+    # ports:
+    #   - 3000:9009
+    networks:
+      - drone
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    env_file:
+      - ./drone.env
+    environment:
+      - DRONE_RUNNER_NAME=bob
+      - DRONE_LOGS_DEBUG=true
+      - DRONE_LOGS_TRACE=true
+      - DRONE_RPC_DUMP_HTTP=true
+      - DRONE_RPC_DUMP_HTTP_BODY=true
+      - DRONE_RPC_SERVER=http://drone-server:80
+      # - DRONE_UI_DISABLE=false
+      # - DRONE_UI_USERNAME=root
+      # - DRONE_UI_PASSWORD=root
+      - DRONE_RUNNER_CAPACITY=10
 
-  # drone-agent3:
-  #   logging: *default-logging
-  #   image: drone/agent:1.6
-  #   command: agent
-  #   restart: always
-  #   depends_on:
-  #     - drone-server
-  #   # ports:
-  #   #   - 3000:9009
-  #   networks:
-  #     - drone
-  #   volumes:
-  #     - /var/run/docker.sock:/var/run/docker.sock
-  #   env_file:
-  #     - ./drone.env
-  #   environment:
-  #     - DRONE_RUNNER_NAME=james
-  #     - DRONE_LOGS_DEBUG=true
-  #     - DRONE_LOGS_TRACE=true
-  #     - DRONE_RPC_DUMP_HTTP=true
-  #     - DRONE_RPC_DUMP_HTTP_BODY=true
-  #     - DRONE_RPC_SERVER=http://drone-server:80
-  #     # - DRONE_UI_DISABLE=false
-  #     # - DRONE_UI_USERNAME=root
-  #     # - DRONE_UI_PASSWORD=root
-  #     - DRONE_RUNNER_CAPACITY=10
+  drone-agent3:
+    logging: *default-logging
+    image: drone/agent:1.6
+    command: agent
+    restart: always
+    depends_on:
+      - drone-server
+    # ports:
+    #   - 3000:9009
+    networks:
+      - drone
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    env_file:
+      - ./drone.env
+    environment:
+      - DRONE_RUNNER_NAME=james
+      - DRONE_LOGS_DEBUG=true
+      - DRONE_LOGS_TRACE=true
+      - DRONE_RPC_DUMP_HTTP=true
+      - DRONE_RPC_DUMP_HTTP_BODY=true
+      - DRONE_RPC_SERVER=http://drone-server:80
+      # - DRONE_UI_DISABLE=false
+      # - DRONE_UI_USERNAME=root
+      # - DRONE_UI_PASSWORD=root
+      - DRONE_RUNNER_CAPACITY=10
 
 networks:
   public:
