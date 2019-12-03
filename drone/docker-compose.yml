@@ -41,7 +41,7 @@ services:
     environment:
       # - DRONE_GITHUB_SKIP_VERIFY=true
       - DRONE_AGENTS_ENABLED=true
-      - DRONE_SERVER_PROTO=https
+      # - DRONE_SERVER_PROTO=https
       - DRONE_TLS_AUTOCERT=false
       - DRONE_OPEN=false
       - DRONE_GITHUB=true
@@ -71,6 +71,8 @@ services:
     restart: always
     depends_on:
       - drone-server
+    ports:
+      - 9009:3000
     networks:
       - drone
     volumes:
@@ -79,9 +81,9 @@ services:
       - ./drone.env
     environment:
       - DRONE_LOGS_DEBUG=true
-      - DRONE_RPC_SERVER=drone-server:9000
-      # - DRONE_UI_USERNAME=root
-      # - DRONE_UI_PASSWORD=root
+      - DRONE_RPC_SERVER=drone-server
+      - DRONE_UI_USERNAME=root
+      - DRONE_UI_PASSWORD=root
 
 networks:
   public:
