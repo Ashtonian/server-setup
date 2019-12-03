@@ -45,6 +45,7 @@ services:
       - DRONE_TLS_AUTOCERT=false
       - DRONE_OPEN=false
       - DRONE_GITHUB=true
+      - DRONE_LOGS_DEBUG=true
       - DRONE_DATABASE_DRIVER=postgres
       - DRONE_DATABASE_DATASOURCE=postgres://postgres:${DRONE_PG_PASS}@postgres:5432/postgres?sslmode=disable # TODO
     labels:
