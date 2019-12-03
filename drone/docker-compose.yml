@@ -77,7 +77,7 @@ services:
     env_file:
       - ./drone.env
     environment:
-      - DRONE_DEBUG=true
+      - DRONE_LOGS_DEBUG=true
       - DRONE_RPC_SERVER=drone-server:9000
       # - DRONE_UI_USERNAME=root
       # - DRONE_UI_PASSWORD=root
