@@ -120,6 +120,11 @@ services:
 
 volumes:
   secrets:
+    driver: local
+    driver_opts:
+      type: "none"
+      o: "bind,rw"
+      device: "/mnt/workspace/portus/portus"
   mariadb:
   registry:
 
