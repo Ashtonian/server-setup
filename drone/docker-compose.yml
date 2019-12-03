@@ -46,6 +46,7 @@ services:
       - DRONE_OPEN=false
       - DRONE_GITHUB=true
       - DRONE_LOGS_DEBUG=true
+      - DRONE_LOGS_TRACE=true
       - DRONE_DATABASE_DRIVER=postgres
       - DRONE_DATABASE_DATASOURCE=postgres://postgres:${DRONE_PG_PASS}@postgres:5432/postgres?sslmode=disable # TODO
     labels:
@@ -81,7 +82,7 @@ services:
       - ./drone.env
     environment:
       - DRONE_LOGS_DEBUG=true
-      - DRONE_TRACE=true
+      - DRONE_LOGS_TRACE=true
       - DRONE_RPC_DUMP_HTTP=true
       - DRONE_RPC_DUMP_HTTP_BODY=true
       - DRONE_RPC_SERVER=drone-server:9000
