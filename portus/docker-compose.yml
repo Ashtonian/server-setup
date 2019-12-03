@@ -111,12 +111,28 @@ services:
       - secrets:/secrets:ro
       - ./config.yml:/etc/docker/registry/config.yml:ro
     ports:
-      - 5000:5000
+      # - 5000:5000
       - 5001:5001 # required to access debug service
     links:
       - portus:portus
     networks:
       - portus
+      - public
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: "public"
+      traefik.backend: "portusregistry"
+      traefik.frontend.rule: "Host:registry.ashtonkinslow.com"
+      traefik.port: "5000"
+      traefik.protocol: "http"
+    deploy:
+      labels:
+        traefik.enable: "true"
+        traefik.docker.network: "public"
+        traefik.backend: "portusregistry"
+        traefik.frontend.rule: "Host:registry.ashtonkinslow.com"
+        traefik.port: "5000"
+        traefik.protocol: "http"
 
 volumes:
   secrets:
