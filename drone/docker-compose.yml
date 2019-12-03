@@ -86,6 +86,7 @@ services:
       - DRONE_RPC_DUMP_HTTP=true
       - DRONE_RPC_DUMP_HTTP_BODY=true
       - DRONE_RPC_SERVER=http://drone-server:80
+      - DRONE_UI_DISABLE=false
       - DRONE_UI_USERNAME=root
       - DRONE_UI_PASSWORD=root
       - DRONE_RUNNER_CAPACITY=10
