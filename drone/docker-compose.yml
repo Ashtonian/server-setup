@@ -85,7 +85,7 @@ services:
       - DRONE_LOGS_TRACE=true
       - DRONE_RPC_DUMP_HTTP=true
       - DRONE_RPC_DUMP_HTTP_BODY=true
-      - DRONE_RPC_SERVER=https://drone-server:9000
+      - DRONE_RPC_SERVER=http://drone-server:80
       - DRONE_UI_USERNAME=root
       - DRONE_UI_PASSWORD=root
 
