@@ -3,8 +3,8 @@ version: "3.7"
 services:
   portus:
     image: opensuse/portus:2.4
-    env_file:
-      - ./portus.env
+    # env_file:
+    #   - ./portus.env
     environment:
       - PORTUS_MACHINE_FQDN_VALUE=portus.ashtonkinslow.com
       - PORTUS_DB_HOST=db
@@ -68,8 +68,8 @@ services:
       - PORTUS_BACKGROUND=true
     links:
       - db
-    env_file:
-      - ./portus.env
+    # env_file:
+    #   - ./portus.env
     volumes:
       - secrets:/certificates:ro
     networks:
@@ -78,8 +78,8 @@ services:
   db:
     image: library/mariadb:10.0.33
     command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci --init-connect='SET NAMES UTF8;' --innodb-flush-log-at-trx-commit=0
-    env_file:
-      - ./portus.env
+    # env_file:
+    #   - ./portus.env
     environment:
       - MYSQL_DATABASE=portus_production
       - MYSQL_ROOT_PASSWORD=${DATABASE_PASSWORD}
@@ -90,8 +90,8 @@ services:
 
   registry:
     image: library/registry:2
-    env_file:
-      - ./portus.env
+    # env_file:
+    #   - ./portus.env
     environment:
       # REGISTRY_HTTP_ADDR: registry.ashtonkinslow.com
       # Authentication
@@ -150,3 +150,22 @@ networks:
   public:
     external: true
   portus:
+
+
+
+
+
+${SECRET_KEY_BASE}
+${PORTUS_PASSWORD}
+${DATABASE_PASSWORD}
+${REGISTRY_FQDN}
+
+    PORTUS_MACHINE_FQDN_VALUE=portus.ashtonkinslow.com
+PORTUS_DB_PASSWORD=blamowamo1234!
+PORTUS_SECRET_KEY_BASE=LPnneigZkWrTK3r8aPG4qWC7GvDKQK2R
+PORTUS_PASSWORD=pmofo-cookies90
+MYSQL_ROOT_PASSWORD=blamowamo1234!
+REGISTRY_AUTH_TOKEN_REALM=https://portus.ashtonkinslow.com/v2/token
+REGISTRY_AUTH_TOKEN_SERVICE=portus.ashtonkinslow.com:5000
+REGISTRY_AUTH_TOKEN_ISSUER=portus.ashtonkinslow.com
+url=https://portus.ashtonkinslow.com/v2/webhooks/events
