@@ -95,7 +95,7 @@ services:
     environment:
       # REGISTRY_HTTP_ADDR: registry.ashtonkinslow.com
       # Authentication
-      REGISTRY_AUTH_TOKEN_REALM: http://${MACHINE_FQDN}/v2/token
+      REGISTRY_AUTH_TOKEN_REALM: https://${MACHINE_FQDN}/v2/token
       REGISTRY_AUTH_TOKEN_SERVICE: ${MACHINE_FQDN}
       REGISTRY_AUTH_TOKEN_ISSUER: ${MACHINE_FQDN}
       REGISTRY_AUTH_TOKEN_ROOTCERTBUNDLE: /secrets/portus.crt
