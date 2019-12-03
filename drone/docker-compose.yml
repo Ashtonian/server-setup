@@ -1,7 +1,30 @@
 version: "3.7"
 
+x-logging:
+  &default-logging
+  options:
+    max-size: '500m'
+    max-file: '5'
+  driver: json-file
+
 services:
+  postgres:
+    image: postgres:10
+    restart: always
+    # https://github.com/docker-library/docs/tree/master/postgres#environment-variables=
+    logging: *default-logging
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=${DRONE_PG_PASS}
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - drone
+
   drone-server:
+    logging: *default-logging
     image: drone/drone:1.6
     # ports:
     #   - 8000:80
@@ -22,6 +45,8 @@ services:
       - DRONE_TLS_AUTOCERT=false
       - DRONE_OPEN=false
       - DRONE_GITHUB=true
+      - DRONE_DATABASE_DRIVER=postgres
+      - DRONE_DATABASE_DATASOURCE=postgres://postgres:${DRONE_PG_PASS}@postgres:5432/postgres?sslmode=disable # TODO
     labels:
       traefik.enable: "true"
       traefik.docker.network: "public"
@@ -39,6 +64,7 @@ services:
         traefik.protocol: "http"
 
   drone-agent:
+    logging: *default-logging
     image: drone/agent:1.6
     command: agent
     restart: always
@@ -61,3 +87,4 @@ networks:
 
 volumes:
   drone:
+  postgres:
