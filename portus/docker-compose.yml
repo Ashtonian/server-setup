@@ -93,6 +93,7 @@ services:
     env_file:
       - ./portus.env
     environment:
+      REGISTRY_HTTP_ADDR: registry.ashtonkinslow.com
       # Authentication
       REGISTRY_AUTH_TOKEN_REALM: http://${MACHINE_FQDN}:3000/v2/token
       REGISTRY_AUTH_TOKEN_SERVICE: ${MACHINE_FQDN}:5000
@@ -121,7 +122,7 @@ services:
     labels:
       traefik.enable: "true"
       traefik.docker.network: "public"
-      traefik.backend: "portusregistry"
+      traefik.backend: "registry"
       traefik.frontend.rule: "Host:registry.ashtonkinslow.com"
       traefik.port: "5000"
       traefik.protocol: "http"
@@ -129,7 +130,7 @@ services:
       labels:
         traefik.enable: "true"
         traefik.docker.network: "public"
-        traefik.backend: "portusregistry"
+        traefik.backend: "registry"
         traefik.frontend.rule: "Host:registry.ashtonkinslow.com"
         traefik.port: "5000"
         traefik.protocol: "http"
