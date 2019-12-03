@@ -150,22 +150,3 @@ networks:
   public:
     external: true
   portus:
-
-
-
-
-
-${SECRET_KEY_BASE}
-${PORTUS_PASSWORD}
-${DATABASE_PASSWORD}
-${REGISTRY_FQDN}
-
-    PORTUS_MACHINE_FQDN_VALUE=portus.ashtonkinslow.com
-PORTUS_DB_PASSWORD=blamowamo1234!
-PORTUS_SECRET_KEY_BASE=LPnneigZkWrTK3r8aPG4qWC7GvDKQK2R
-PORTUS_PASSWORD=pmofo-cookies90
-MYSQL_ROOT_PASSWORD=blamowamo1234!
-REGISTRY_AUTH_TOKEN_REALM=https://portus.ashtonkinslow.com/v2/token
-REGISTRY_AUTH_TOKEN_SERVICE=portus.ashtonkinslow.com:5000
-REGISTRY_AUTH_TOKEN_ISSUER=portus.ashtonkinslow.com
-url=https://portus.ashtonkinslow.com/v2/webhooks/events
