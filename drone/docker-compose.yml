@@ -41,7 +41,7 @@ services:
     environment:
       # - DRONE_GITHUB_SKIP_VERIFY=true
       - DRONE_AGENTS_ENABLED=true
-      # - DRONE_SERVER_PROTO=https
+      - DRONE_SERVER_PROTO=https
       - DRONE_TLS_AUTOCERT=false
       - DRONE_OPEN=false
       - DRONE_GITHUB=true
