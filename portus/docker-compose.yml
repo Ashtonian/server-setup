@@ -6,7 +6,7 @@ services:
     env_file:
       - ./portus.env
     environment:
-      - PORTUS_MACHINE_FQDN_VALUE=${MACHINE_FQDN}
+      - PORTUS_MACHINE_FQDN_VALUE=portus.ashtonkinslow.com
       - PORTUS_DB_HOST=db
       - PORTUS_DB_DATABASE=portus_production
       - PORTUS_DB_PASSWORD=${DATABASE_PASSWORD}
@@ -51,7 +51,7 @@ services:
     environment:
       # Theoretically not needed, but cconfig's been buggy on this...
       - CCONFIG_PREFIX=PORTUS
-      - PORTUS_MACHINE_FQDN_VALUE=${MACHINE_FQDN}
+      - PORTUS_MACHINE_FQDN_VALUE=portus.ashtonkinslow.com
 
       # DB. The password for the database should definitely not be here. You are
       # probably better off with Docker Swarm secrets.
@@ -95,9 +95,9 @@ services:
     environment:
       # REGISTRY_HTTP_ADDR: registry.ashtonkinslow.com
       # Authentication
-      REGISTRY_AUTH_TOKEN_REALM: https://${MACHINE_FQDN}/v2/token
-      REGISTRY_AUTH_TOKEN_SERVICE: ${MACHINE_FQDN}
-      REGISTRY_AUTH_TOKEN_ISSUER: ${MACHINE_FQDN}
+      REGISTRY_AUTH_TOKEN_REALM: https://${REGISTRY_FQDN}/v2/token
+      REGISTRY_AUTH_TOKEN_SERVICE: ${REGISTRY_FQDN}
+      REGISTRY_AUTH_TOKEN_ISSUER: ${REGISTRY_FQDN}
       REGISTRY_AUTH_TOKEN_ROOTCERTBUNDLE: /secrets/portus.crt
 
       # Portus endpoint
