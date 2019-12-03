@@ -93,7 +93,7 @@ services:
     env_file:
       - ./portus.env
     environment:
-      REGISTRY_HTTP_ADDR: registry.ashtonkinslow.com:443
+      # REGISTRY_HTTP_ADDR: registry.ashtonkinslow.com
       # Authentication
       REGISTRY_AUTH_TOKEN_REALM: http://${MACHINE_FQDN}:3000/v2/token
       REGISTRY_AUTH_TOKEN_SERVICE: ${MACHINE_FQDN}:5000
