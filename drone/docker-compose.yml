@@ -73,7 +73,7 @@ services:
     depends_on:
       - drone-server
     ports:
-      - 9009:3000
+      - 3000:9009
     networks:
       - drone
     volumes:
@@ -88,6 +88,7 @@ services:
       - DRONE_RPC_SERVER=http://drone-server:80
       - DRONE_UI_USERNAME=root
       - DRONE_UI_PASSWORD=root
+      - DRONE_RUNNER_CAPACITY=10
 
 networks:
   public:
