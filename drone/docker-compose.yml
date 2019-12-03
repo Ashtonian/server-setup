@@ -81,6 +81,9 @@ services:
       - ./drone.env
     environment:
       - DRONE_LOGS_DEBUG=true
+      - DRONE_TRACE=true
+      - DRONE_RPC_DUMP_HTTP=true
+      - DRONE_RPC_DUMP_HTTP_BODY=true
       - DRONE_RPC_SERVER=drone-server:9000
       - DRONE_UI_USERNAME=root
       - DRONE_UI_PASSWORD=root
