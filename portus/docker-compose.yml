@@ -44,7 +44,7 @@ services:
         traefik.protocol: "http"
 
   background:
-    image: opensuse/portus:2.4
+    image: opensuse/portus:2.5
     depends_on:
       - portus
       - db
@@ -89,7 +89,7 @@ services:
       - portus
 
   registry:
-    image: library/registry:2
+    image: library/registry:2.7.1
     # env_file:
     #   - ./portus.env
     environment:
