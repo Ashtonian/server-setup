@@ -68,7 +68,7 @@ services:
       traefik.enable: "true"
       traefik.docker.network: "public"
       traefik.backend: "mastodon"
-      traefik.frontend.rule: "Host:mastodon.ashtonkinslow.com"
+      traefik.frontend.rule: "Host:mastodon.ashlab.dev"
       traefik.port: "3000"
       traefik.protocol: "http"
       traefik.frontend.headers.SSLRedirect: "true"
@@ -76,7 +76,7 @@ services:
       traefik.frontend.headers.browserXSSFilter: "true"
       traefik.frontend.headers.contentTypeNosniff: "true"
       traefik.frontend.headers.forceSTSHeader: "true"
-      traefik.frontend.headers.SSLHost: "mastodon.ashtonkinslow.com"
+      traefik.frontend.headers.SSLHost: "mastodon.ashlab.dev"
       traefik.frontend.headers.STSIncludeSubdomains: "true"
       traefik.frontend.headers.STSPreload: "true"
       traefik.frontend.headers.frameDeny: "true"
@@ -85,7 +85,7 @@ services:
         traefik.enable: "true"
         traefik.docker.network: "public"
         traefik.backend: "mastodon"
-        traefik.frontend.rule: "Host:mastodon.ashtonkinslow.com"
+        traefik.frontend.rule: "Host:mastodon.ashlab.dev"
         traefik.port: "3000"
         traefik.protocol: "http"
         traefik.frontend.headers.SSLRedirect: "true"
@@ -93,7 +93,7 @@ services:
         traefik.frontend.headers.browserXSSFilter: "true"
         traefik.frontend.headers.contentTypeNosniff: "true"
         traefik.frontend.headers.forceSTSHeader: "true"
-        traefik.frontend.headers.SSLHost: "mastodon.ashtonkinslow.com"
+        traefik.frontend.headers.SSLHost: "mastodon.ashlab.dev"
         traefik.frontend.headers.STSIncludeSubdomains: "true"
         traefik.frontend.headers.STSPreload: "true"
         traefik.frontend.headers.frameDeny: "true"
@@ -134,7 +134,7 @@ services:
       traefik.enable: "true"
       traefik.docker.network: "public"
       traefik.backend: "streaming"
-      traefik.frontend.rule: "Host:mastodon.ashtonkinslow.com;PathPrefixStrip:/api/v1/streaming"
+      traefik.frontend.rule: "Host:mastodon.ashlab.dev;PathPrefixStrip:/api/v1/streaming"
       traefik.port: "4000"
       traefik.protocol: "http"
       traefik.frontend.headers.SSLRedirect: "true"
@@ -142,7 +142,7 @@ services:
       traefik.frontend.headers.browserXSSFilter: "true"
       traefik.frontend.headers.contentTypeNosniff: "true"
       traefik.frontend.headers.forceSTSHeader: "true"
-      traefik.frontend.headers.SSLHost: "mastodon.ashtonkinslow.com"
+      traefik.frontend.headers.SSLHost: "mastodon.ashlab.dev"
       traefik.frontend.headers.STSIncludeSubdomains: "true"
       traefik.frontend.headers.STSPreload: "true"
       traefik.frontend.headers.frameDeny: "true"
@@ -151,7 +151,7 @@ services:
         traefik.enable: "true"
         traefik.docker.network: "public"
         traefik.backend: "streaming"
-        traefik.frontend.rule: "Host:mastodon.ashtonkinslow.com;PathPrefixStrip:/api/v1/streaming"
+        traefik.frontend.rule: "Host:mastodon.ashlab.dev;PathPrefixStrip:/api/v1/streaming"
         traefik.port: "4000"
         traefik.protocol: "http"
         traefik.frontend.headers.SSLRedirect: "true"
@@ -159,7 +159,7 @@ services:
         traefik.frontend.headers.browserXSSFilter: "true"
         traefik.frontend.headers.contentTypeNosniff: "true"
         traefik.frontend.headers.forceSTSHeader: "true"
-        traefik.frontend.headers.SSLHost: "mastodon.ashtonkinslow.com"
+        traefik.frontend.headers.SSLHost: "mastodon.ashlab.dev"
         traefik.frontend.headers.STSIncludeSubdomains: "true"
         traefik.frontend.headers.STSPreload: "true"
         traefik.frontend.headers.frameDeny: "true"
@@ -201,7 +201,7 @@ networks:
   internal_network:
     internal: true
 
-volumes: 
+volumes:
   minio-data:
   public_system:
   postgres:

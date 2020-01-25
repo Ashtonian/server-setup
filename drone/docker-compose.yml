@@ -53,7 +53,7 @@ services:
       traefik.enable: "true"
       traefik.docker.network: "public"
       traefik.backend: "drone"
-      traefik.frontend.rule: "Host:drone.ashtonkinslow.com"
+      traefik.frontend.rule: "Host:drone.ashlab.dev"
       traefik.port: "80"
       traefik.protocol: "http"
     deploy:
@@ -61,7 +61,7 @@ services:
         traefik.enable: "true"
         traefik.docker.network: "public"
         traefik.backend: "drone"
-        traefik.frontend.rule: "Host:drone.ashtonkinslow.com"
+        traefik.frontend.rule: "Host:drone.ashlab.dev"
         traefik.port: "80"
         traefik.protocol: "http"
 

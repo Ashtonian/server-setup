@@ -6,7 +6,7 @@ services:
     # env_file:
     #   - ./portus.env
     environment:
-      - PORTUS_MACHINE_FQDN_VALUE=portus.ashtonkinslow.com
+      - PORTUS_MACHINE_FQDN_VALUE=portus.ashlab.dev
       - PORTUS_DB_HOST=db
       - PORTUS_DB_DATABASE=portus_production
       - PORTUS_DB_PASSWORD=${DATABASE_PASSWORD}
@@ -31,7 +31,7 @@ services:
       traefik.enable: "true"
       traefik.docker.network: "public"
       traefik.backend: "portus"
-      traefik.frontend.rule: "Host:portus.ashtonkinslow.com"
+      traefik.frontend.rule: "Host:portus.ashlab.dev"
       traefik.port: "3000"
       traefik.protocol: "http"
     deploy:
@@ -39,7 +39,7 @@ services:
         traefik.enable: "true"
         traefik.docker.network: "public"
         traefik.backend: "portus"
-        traefik.frontend.rule: "Host:portus.ashtonkinslow.com"
+        traefik.frontend.rule: "Host:portus.ashlab.dev"
         traefik.port: "3000"
   #       traefik.protocol: "http"
 
@@ -51,7 +51,7 @@ services:
   #   environment:
   #     # Theoretically not needed, but cconfig's been buggy on this...
   #     - CCONFIG_PREFIX=PORTUS
-  #     - PORTUS_MACHINE_FQDN_VALUE=portus.ashtonkinslow.com
+  #     - PORTUS_MACHINE_FQDN_VALUE=portus.ashlab.dev
 
   #     # DB. The password for the database should definitely not be here. You are
   #     # probably better off with Docker Swarm secrets.
@@ -93,17 +93,17 @@ services:
     # env_file:
     #   - ./portus.env
     environment:
-      # REGISTRY_HTTP_ADDR: registry.ashtonkinslow.com
+      # REGISTRY_HTTP_ADDR: registry.ashlab.dev
       # Authentication
-      REGISTRY_AUTH_TOKEN_REALM: https://portus.ashtonkinslow.com/v2/token
-      REGISTRY_AUTH_TOKEN_SERVICE: registry.ashtonkinslow.com
-      REGISTRY_AUTH_TOKEN_ISSUER: portus.ashtonkinslow.com
+      REGISTRY_AUTH_TOKEN_REALM: https://portus.ashlab.dev/v2/token
+      REGISTRY_AUTH_TOKEN_SERVICE: registry.ashlab.dev
+      REGISTRY_AUTH_TOKEN_ISSUER: portus.ashlab.dev
       REGISTRY_AUTH_TOKEN_ROOTCERTBUNDLE: /secrets/portus.crt
 
       # Portus endpoint
       REGISTRY_NOTIFICATIONS_ENDPOINTS: >
         - name: portus
-          url: https://portus.ashtonkinslow.com/v2/webhooks/events
+          url: https://portus.ashlab.dev/v2/webhooks/events
           timeout: 2000ms
           threshold: 5
           backoff: 1s
@@ -123,7 +123,7 @@ services:
       traefik.enable: "true"
       traefik.docker.network: "public"
       traefik.backend: "registry"
-      traefik.frontend.rule: "Host:registry.ashtonkinslow.com"
+      traefik.frontend.rule: "Host:registry.ashlab.dev"
       traefik.port: "5000"
       traefik.protocol: "http"
     deploy:
@@ -131,7 +131,7 @@ services:
         traefik.enable: "true"
         traefik.docker.network: "public"
         traefik.backend: "registry"
-        traefik.frontend.rule: "Host:registry.ashtonkinslow.com"
+        traefik.frontend.rule: "Host:registry.ashlab.dev"
         traefik.port: "5000"
         traefik.protocol: "http"
 

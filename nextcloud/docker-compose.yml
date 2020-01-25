@@ -47,7 +47,7 @@ services:
       MYSQL_PASSWORD: ${NC_DB_PASS}
       MYSQL_DATABASE: nextcloud
       MYSQL_USER: nextcloud
-      NEXTCLOUD_TRUSTED_DOMAINS: nextcloud.ashtonkinslow.com
+      NEXTCLOUD_TRUSTED_DOMAINS: nextcloud.ashlab.dev
       REDIS_HOST: redis
       NEXTCLOUD_DATA_DIR: /data
     depends_on:
@@ -60,7 +60,7 @@ services:
     #   traefik.enable: "true"
     #   traefik.docker.network: "public"
     #   traefik.backend: "nextcloud"
-    #   traefik.frontend.rule: "Host:nextcloud.ashtonkinslow.com"
+    #   traefik.frontend.rule: "Host:nextcloud.ashlab.dev"
     #   traefik.port: "80"
     #   traefik.protocol: "http"
     # user: "5001:5001"
@@ -69,7 +69,7 @@ services:
     #     traefik.enable: "true"
     #     traefik.docker.network: "public"
     #     traefik.backend: "nextcloud"
-    #     traefik.frontend.rule: "Host:nextcloud.ashtonkinslow.com"
+    #     traefik.frontend.rule: "Host:nextcloud.ashlab.dev"
     #     traefik.port: "80"
     #     traefik.protocol: "http"
     # traefik.frontend.whiteList.sourceRange: 10.0.0.1/24

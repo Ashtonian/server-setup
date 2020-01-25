@@ -13,9 +13,9 @@ services:
     networks:
       - cfddns
     environment:
-      ZONE: ashtonkinslow.com
-      HOST: ddns.ashtonkinslow.com
-      EMAIL: cloudflare@ashtonkinslow.com
+      ZONE: ashlab.dev
+      HOST: ddns.ashlab.dev
+      EMAIL: cloudflare@ashlab.dev
       API: ${CF_API_KEY}
       TTL: 120
       PROXY: "false"
@@ -40,7 +40,7 @@ services:
       - "--entrypoints=Name:https Address::443 TLS"
       - "--defaultentrypoints=http,https"
       - "--acme"
-      - "--acme.email=acme@ashtonkinslow.com"
+      - "--acme.email=acme@ashlab.dev"
       - "--acme.storage=/certs/acme.json"
       - "--acme.entryPoint=https"
       # - "--acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory" # lets encrypt staging, remove after verified deployment
