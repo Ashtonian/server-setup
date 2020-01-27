@@ -79,9 +79,9 @@ services:
 
 networks:
   public:
-    external=true
+    external: true
   dockersock:
-    external=true
+    external: true
   cfddns:
 
 volumes:
