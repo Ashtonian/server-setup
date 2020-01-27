@@ -26,34 +26,41 @@ services:
       - "80:80"
       - "443:443"
       - "8183:8080"
-    image: traefik:1.7
+    image: traefik:2.1
     logging: *default-logging
     volumes:
       - traefik_certs:/certs
     networks:
       - public
       - dockersock
+    labels:
+      traefik.http.routers.http_catchall.rule: HostRegexp(`{any:.+}`)
+      traefik.http.routers.http_catchall.entrypoints: web
+      traefik.http.routers.http_catchall.middlewares: https_redirect
+      traefik.http.middlewares.https_redirect.redirectscheme.scheme: https
+      traefik.http.middlewares.https_redirect.redirectscheme.permanent: true
+      traefik.http.middlewares.sslHeaders.headers.framedeny: true
+      traefik.http.middlewares.sslHeaders.headers.sslredirect: true
+      traefik.http.middlewares.sslHeaders.headers.STSSeconds: "315360000"
+      traefik.http.middlewares.sslHeaders.headers.browserXSSFilter: "true"
+      traefik.http.middlewares.sslHeaders.headers.contentTypeNosniff: "true"
+      traefik.http.middlewares.sslHeaders.headers.forceSTSHeader: "true"
+      traefik.http.middlewares.sslHeaders.headers.STSIncludeSubdomains: "true"
+      traefik.http.middlewares.sslHeaders.headers.STSPreload: "true"
     command:
-      # - "--debug=true" # sekurity check
-      # - "--api" # sekurity check exposes config via 8080
-      - "--entrypoints=Name:http Address::80 Redirect.EntryPoint:https"
-      - "--entrypoints=Name:https Address::443 TLS"
-      - "--defaultentrypoints=http,https"
-      - "--acme"
-      - "--acme.email=acme@ashlab.dev"
-      - "--acme.storage=/certs/acme.json"
-      - "--acme.entryPoint=https"
-      # - "--acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory" # lets encrypt staging, remove after verified deployment
-      - "--acme.tlsChallenge"
-      - "--acme.onHostRule=true"
-      - "--docker"
-      - "--docker.endpoint=tcp://mgmt_docker-proxy:2375" ## references mgmt stack
-      # - "--docker.exposedbydefault=false" # sekurity check
-      # - "--docker.swarmMode"
-      # - "--docker.domain=mydomain.ca"
-      - "--docker.watch"
-      - "--insecureSkipVerify=true"
-
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--providers.docker=true"
+      - "--certificatesResolvers.le.acme.email=acme@ashtonkinslow.com"
+      - "--certificatesResolvers.le.acme.storage=/certs/acme.json"
+      - "--certificatesResolvers.le.acme.httpChallenge.entryPoint=web"
+      - "--certificatesResolvers.le.acme.tlsChallenge=true"
+      - "--certificatesResolvers.le.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory" # lets encrypt staging, remove after verified deployment
+      - "--providers.docker.endpoint=tcp://mgmt_docker-proxy:2375"
+      # - "--providers.docker.useBindPortIP=true"
+      - "--providers.docker.exposedByDefault=false"
+      - "--providers.docker.network=public"
+      # - "--providers.docker.swarmMode=true"
 networks:
   public:
     external: true

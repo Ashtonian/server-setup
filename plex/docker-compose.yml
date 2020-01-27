@@ -39,37 +39,22 @@ services:
       - plex_music:/data/music:ro
     labels:
       traefik.enable: "true"
-      traefik.docker.network: "public"
-      traefik.backend: "plex"
-      traefik.frontend.rule: "Host:plex.ashlab.dev"
-      traefik.port: "32400"
-      traefik.protocol: "http"
-      traefik.frontend.headers.SSLRedirect: "true"
-      traefik.frontend.headers.STSSeconds: "315360000"
-      traefik.frontend.headers.browserXSSFilter: "true"
-      traefik.frontend.headers.contentTypeNosniff: "true"
-      traefik.frontend.headers.forceSTSHeader: "true"
-      traefik.frontend.headers.SSLHost: "plex.ashlab.dev"
-      traefik.frontend.headers.STSIncludeSubdomains: "true"
-      traefik.frontend.headers.STSPreload: "true"
-      traefik.frontend.headers.frameDeny: "true"
+      traefik.http.middlewares.sslHeaders.headers.SSLHost: "plex.ashlab.dev"
+      traefik.http.routers.plex.rule: "Host(`plex.ashlab.dev`)"
+      traefik.http.routers.plex.middlewares: sslHeaders
+      traefik.http.routers.plex.service: plex
+      traefik.http.services.plex.loadbalancer.server.port: 32400
+      traefik.http.services.plex.loadbalancer.server.scheme: http
     deploy:
       labels:
         traefik.enable: "true"
-        traefik.docker.network: "public"
-        traefik.backend: "plex"
-        traefik.frontend.rule: "Host:plex.ashlab.dev"
-        traefik.port: "32400"
-        traefik.protocol: "http"
-        traefik.frontend.headers.SSLRedirect: "true"
-        traefik.frontend.headers.STSSeconds: "315360000"
-        traefik.frontend.headers.browserXSSFilter: "true"
-        traefik.frontend.headers.contentTypeNosniff: "true"
-        traefik.frontend.headers.forceSTSHeader: "true"
-        traefik.frontend.headers.SSLHost: "plex.ashlab.dev"
-        traefik.frontend.headers.STSIncludeSubdomains: "true"
-        traefik.frontend.headers.STSPreload: "true"
-        traefik.frontend.headers.frameDeny: "true"
+        traefik.http.middlewares.sslHeaders.headers.SSLHost: "plex.ashlab.dev"
+        traefik.http.routers.plex.rule: "Host(`plex.ashlab.dev`)"
+        traefik.http.routers.plex.middlewares: sslHeaders
+        traefik.http.routers.plex.service: plex
+        traefik.http.services.plex.loadbalancer.server.port: 32400
+        traefik.http.services.plex.loadbalancer.server.scheme: http
+
 
   tautulli:
     restart: always
@@ -101,21 +86,21 @@ services:
       - 3579:3579
     networks:
       - public
-    labels:
-      traefik.enable: "true"
-      traefik.docker.network: "public"
-      traefik.backend: "ombi"
-      traefik.frontend.rule: "Host:requests.ashlab.dev"
-      traefik.port: "3579"
-      traefik.protocol: "http"
-    deploy:
-      labels:
-        traefik.enable: "true"
-        traefik.docker.network: "public"
-        traefik.backend: "ombi"
-        traefik.frontend.rule: "Host:requests.ashlab.dev"
-        traefik.port: "3579"
-        traefik.protocol: "http"
+    # labels:
+    #   traefik.enable: "true"
+    #   traefik.docker.network: "public"
+    #   traefik.backend: "ombi"
+    #   traefik.frontend.rule: "Host:requests.ashlab.dev"
+    #   traefik.port: "3579"
+    #   traefik.protocol: "http"
+    # deploy:
+    #   labels:
+    #     traefik.enable: "true"
+    #     traefik.docker.network: "public"
+    #     traefik.backend: "ombi"
+    #     traefik.frontend.rule: "Host:requests.ashlab.dev"
+    #     traefik.port: "3579"
+    #     traefik.protocol: "http"
 
 networks:
   public:
