@@ -43,7 +43,7 @@ services:
       - "traefik.http.routers.plex.rule=Host(`plex.ashlab.dev`)"
       - "traefik.http.routers.plex.middlewares=https_redirect, sslHeaders"
       - "traefik.http.routers.plex.service=plex"
-      - "traefik.http.services.plex.loadbalancer.server.port=32400
+      - "traefik.http.services.plex.loadbalancer.server.port=32400"
       - "traefik.http.services.plex.loadbalancer.server.scheme=http"
       - "traefik.http.middlewares.https_redirect.redirectscheme.scheme=https" # Standard move to default when traefik fixes behavior
       - "traefik.http.middlewares.https_redirect.redirectscheme.permanent=true"
@@ -62,7 +62,7 @@ services:
         - "traefik.http.routers.plex.rule=Host(`plex.ashlab.dev`)"
         - "# traefik.http.routers.plex.middlewares=https_redirect, sslHeaders"
         - "traefik.http.routers.plex.service=plex"
-        - "traefik.http.services.plex.loadbalancer.server.port=32400
+        - "traefik.http.services.plex.loadbalancer.server.port=32400"
         - "traefik.http.services.plex.loadbalancer.server.scheme=http"
         - "traefik.http.middlewares.https_redirect.redirectscheme.scheme=https" # Standard move to default when traefik fixes behavior
         - "traefik.http.middlewares.https_redirect.redirectscheme.permanent=true"
