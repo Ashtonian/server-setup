@@ -63,6 +63,8 @@ services:
         - "traefik.http.middlewares.sslHeaders.headers.STSIncludeSubdomains=true"
         - "traefik.http.middlewares.sslHeaders.headers.STSPreload=true"
     command:
+      - "--api.dashboard=true"
+      - "--api.insecure=true"
       - "--entrypoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
       - "--providers.docker=true"
