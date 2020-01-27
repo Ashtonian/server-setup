@@ -46,7 +46,6 @@ services:
       - "traefik.http.routers.plex.tls.certresolver=le"
       - "traefik.http.services.plex.loadbalancer.server.port=32400"
       - "traefik.http.services.plex.loadbalancer.server.scheme=http"
-      - "traefik.http.middlewares.sslHeaders.headers.SSLHost=plex.ashlab.dev"
     deploy:
       labels:
         - "traefik.enable=true"
@@ -57,7 +56,6 @@ services:
         - "traefik.http.routers.plex.tls.certresolver=le"
         - "traefik.http.services.plex.loadbalancer.server.port=32400"
         - "traefik.http.services.plex.loadbalancer.server.scheme=http"
-        - "traefik.http.middlewares.sslHeaders.headers.SSLHost=plex.ashlab.dev"
 
   tautulli:
     restart: always
@@ -98,7 +96,6 @@ services:
       - "traefik.http.routers.requests.tls.certresolver=le"
       - "traefik.http.services.requests.loadbalancer.server.port=3579"
       - "traefik.http.services.requests.loadbalancer.server.scheme=http"
-      - "traefik.http.middlewares.sslHeaders.headers.SSLHost=requests.ashlab.dev"
 
     deploy:
       labels:
@@ -110,7 +107,6 @@ services:
         - "traefik.http.routers.requests.tls.certresolver=le"
         - "traefik.http.services.requests.loadbalancer.server.port=3579"
         - "traefik.http.services.requests.loadbalancer.server.scheme=http"
-        - "traefik.http.middlewares.sslHeaders.headers.SSLHost=requests.ashlab.dev"
 
 networks:
   public:
