@@ -42,18 +42,18 @@ services:
       traefik.http.middlewares.sslHeaders.headers.SSLHost: "plex.ashlab.dev"
       traefik.http.routers.plex.rule: "Host(`plex.ashlab.dev`)"
       traefik.http.routers.plex.middlewares: sslHeaders
-      traefik.http.routers.plex.service: plex
+      traefik.http.routers.plex.service: "plex"
       traefik.http.services.plex.loadbalancer.server.port: 32400
-      traefik.http.services.plex.loadbalancer.server.scheme: http
+      traefik.http.services.plex.loadbalancer.server.scheme: "http"
     deploy:
       labels:
         traefik.enable: "true"
         traefik.http.middlewares.sslHeaders.headers.SSLHost: "plex.ashlab.dev"
         traefik.http.routers.plex.rule: "Host(`plex.ashlab.dev`)"
         traefik.http.routers.plex.middlewares: sslHeaders
-        traefik.http.routers.plex.service: plex
+        traefik.http.routers.plex.service: "plex"
         traefik.http.services.plex.loadbalancer.server.port: 32400
-        traefik.http.services.plex.loadbalancer.server.scheme: http
+        traefik.http.services.plex.loadbalancer.server.scheme: "http"
 
 
   tautulli:

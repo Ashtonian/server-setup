@@ -38,9 +38,9 @@ services:
       traefik.http.routers.http_catchall.entrypoints: web
       traefik.http.routers.http_catchall.middlewares: https_redirect
       traefik.http.middlewares.https_redirect.redirectscheme.scheme: https
-      traefik.http.middlewares.https_redirect.redirectscheme.permanent: true
-      traefik.http.middlewares.sslHeaders.headers.framedeny: true
-      traefik.http.middlewares.sslHeaders.headers.sslredirect: true
+      traefik.http.middlewares.https_redirect.redirectscheme.permanent: "true"
+      traefik.http.middlewares.sslHeaders.headers.framedeny: "true"
+      traefik.http.middlewares.sslHeaders.headers.sslredirect: "true"
       traefik.http.middlewares.sslHeaders.headers.STSSeconds: "315360000"
       traefik.http.middlewares.sslHeaders.headers.browserXSSFilter: "true"
       traefik.http.middlewares.sslHeaders.headers.contentTypeNosniff: "true"
