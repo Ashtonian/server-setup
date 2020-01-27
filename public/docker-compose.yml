@@ -34,6 +34,7 @@ services:
       - public
       - dockersock
     labels:
+      - "traefik.enable=true"
       - "traefik.http.routers.http_catchall.rule=HostRegexp(`{any:.+}`)"
       - "traefik.http.routers.http_catchall.entrypoints=web"
       - "traefik.http.routers.http_catchall.middlewares=https_redirect"
@@ -49,6 +50,7 @@ services:
       - "traefik.http.middlewares.sslHeaders.headers.STSPreload=true"
     deploy:
       labels:
+        - "traefik.enable=true"
         - "traefik.http.routers.http_catchall.rule=HostRegexp(`{any:.+}`)"
         - "traefik.http.routers.http_catchall.entrypoints=web"
         - "traefik.http.routers.http_catchall.middlewares=https_redirect,sslHeaders"
