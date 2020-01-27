@@ -38,22 +38,22 @@ services:
       - plex_movies4k:/data/movies4k:ro
       - plex_music:/data/music:ro
     labels:
-      traefik.enable: "true"
-      traefik.http.middlewares.sslHeaders.headers.SSLHost: "plex.ashlab.dev"
-      traefik.http.routers.plex.rule: "Host(`plex.ashlab.dev`)"
-      # traefik.http.routers.plex.middlewares: "https_redirect, sslHeaders"
-      traefik.http.routers.plex.service: "plex"
-      traefik.http.services.plex.loadbalancer.server.port: 32400
-      traefik.http.services.plex.loadbalancer.server.scheme: "http"
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.sslHeaders.headers.SSLHost=plex.ashlab.dev"
+      - "traefik.http.routers.plex.rule=Host(`plex.ashlab.dev`)"
+      - "# traefik.http.routers.plex.middlewares=https_redirect, sslHeaders"
+      - "traefik.http.routers.plex.service=plex"
+      - "traefik.http.services.plex.loadbalancer.server.port=32400
+      - "traefik.http.services.plex.loadbalancer.server.scheme=http"
     deploy:
       labels:
-        traefik.enable: "true"
-        traefik.http.middlewares.sslHeaders.headers.SSLHost: "plex.ashlab.dev"
-        traefik.http.routers.plex.rule: "Host(`plex.ashlab.dev`)"
-        # traefik.http.routers.plex.middlewares: "https_redirect, sslHeaders"
-        traefik.http.routers.plex.service: "plex"
-        traefik.http.services.plex.loadbalancer.server.port: 32400
-        traefik.http.services.plex.loadbalancer.server.scheme: "http"
+        - "traefik.enable=true"
+        - "traefik.http.middlewares.sslHeaders.headers.SSLHost=plex.ashlab.dev"
+        - "traefik.http.routers.plex.rule=Host(`plex.ashlab.dev`)"
+        - "# traefik.http.routers.plex.middlewares=https_redirect, sslHeaders"
+        - "traefik.http.routers.plex.service=plex"
+        - "traefik.http.services.plex.loadbalancer.server.port=32400
+        - "traefik.http.services.plex.loadbalancer.server.scheme=http"
 
 
   tautulli:
