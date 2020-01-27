@@ -59,16 +59,16 @@ services:
       - "traefik.http.routers.drone.tls.certresolver=le"
       - "traefik.http.services.drone.loadbalancer.server.port=80"
       - "traefik.http.services.drone.loadbalancer.server.scheme=http"
-      - "traefik.http.middlewares.https_redirect.redirectscheme.scheme=https" # Standard move to default when traefik fixes behavior
-      - "traefik.http.middlewares.https_redirect.redirectscheme.permanent=true"
-      - "traefik.http.middlewares.sslHeaders.headers.framedeny=true"
-      - "traefik.http.middlewares.sslHeaders.headers.sslredirect=true"
-      - "traefik.http.middlewares.sslHeaders.headers.STSSeconds=315360000"
-      - "traefik.http.middlewares.sslHeaders.headers.browserXSSFilter=true"
-      - "traefik.http.middlewares.sslHeaders.headers.contentTypeNosniff=true"
-      - "traefik.http.middlewares.sslHeaders.headers.forceSTSHeader=true"
-      - "traefik.http.middlewares.sslHeaders.headers.STSIncludeSubdomains=true"
-      - "traefik.http.middlewares.sslHeaders.headers.STSPreload=true"
+      # - "traefik.http.middlewares.https_redirect.redirectscheme.scheme=https" # Standard move to default when traefik fixes behavior
+      # - "traefik.http.middlewares.https_redirect.redirectscheme.permanent=true"
+      # - "traefik.http.middlewares.sslHeaders.headers.framedeny=true"
+      # - "traefik.http.middlewares.sslHeaders.headers.sslredirect=true"
+      # - "traefik.http.middlewares.sslHeaders.headers.STSSeconds=315360000"
+      # - "traefik.http.middlewares.sslHeaders.headers.browserXSSFilter=true"
+      # - "traefik.http.middlewares.sslHeaders.headers.contentTypeNosniff=true"
+      # - "traefik.http.middlewares.sslHeaders.headers.forceSTSHeader=true"
+      # - "traefik.http.middlewares.sslHeaders.headers.STSIncludeSubdomains=true"
+      # - "traefik.http.middlewares.sslHeaders.headers.STSPreload=true"
     deploy:
       labels:
         - "traefik.enable=true"
@@ -80,16 +80,16 @@ services:
         - "traefik.http.routers.drone.tls.certresolver=le"
         - "traefik.http.services.drone.loadbalancer.server.port=80"
         - "traefik.http.services.drone.loadbalancer.server.scheme=http"
-        - "traefik.http.middlewares.https_redirect.redirectscheme.scheme=https" # Standard move to default when traefik fixes behavior
-        - "traefik.http.middlewares.https_redirect.redirectscheme.permanent=true"
-        - "traefik.http.middlewares.sslHeaders.headers.framedeny=true"
-        - "traefik.http.middlewares.sslHeaders.headers.sslredirect=true"
-        - "traefik.http.middlewares.sslHeaders.headers.STSSeconds=315360000"
-        - "traefik.http.middlewares.sslHeaders.headers.browserXSSFilter=true"
-        - "traefik.http.middlewares.sslHeaders.headers.contentTypeNosniff=true"
-        - "traefik.http.middlewares.sslHeaders.headers.forceSTSHeader=true"
-        - "traefik.http.middlewares.sslHeaders.headers.STSIncludeSubdomains=true"
-        - "traefik.http.middlewares.sslHeaders.headers.STSPreload=true"
+        # - "traefik.http.middlewares.https_redirect.redirectscheme.scheme=https" # Standard move to default when traefik fixes behavior
+        # - "traefik.http.middlewares.https_redirect.redirectscheme.permanent=true"
+        # - "traefik.http.middlewares.sslHeaders.headers.framedeny=true"
+        # - "traefik.http.middlewares.sslHeaders.headers.sslredirect=true"
+        # - "traefik.http.middlewares.sslHeaders.headers.STSSeconds=315360000"
+        # - "traefik.http.middlewares.sslHeaders.headers.browserXSSFilter=true"
+        # - "traefik.http.middlewares.sslHeaders.headers.contentTypeNosniff=true"
+        # - "traefik.http.middlewares.sslHeaders.headers.forceSTSHeader=true"
+        # - "traefik.http.middlewares.sslHeaders.headers.STSIncludeSubdomains=true"
+        # - "traefik.http.middlewares.sslHeaders.headers.STSPreload=true"
 
   drone-agent1:
     logging: *default-logging
