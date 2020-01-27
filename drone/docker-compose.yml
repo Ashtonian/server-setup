@@ -50,20 +50,46 @@ services:
       - DRONE_DATABASE_DRIVER=postgres
       - DRONE_DATABASE_DATASOURCE=postgres://postgres:${DRONE_PG_PASS}@postgres:5432/postgres?sslmode=disable # TODO
     labels:
-      traefik.enable: "true"
-      traefik.docker.network: "public"
-      traefik.backend: "drone"
-      traefik.frontend.rule: "Host:drone.ashlab.dev"
-      traefik.port: "80"
-      traefik.protocol: "http"
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.sslHeaders.headers.SSLHost=drone.ashlab.dev"
+      - "traefik.http.routers.drone.rule=Host(`drone.ashlab.dev`)"
+      - "traefik.http.routers.drone.middlewares=https_redirect, sslHeaders"
+      - "traefik.http.routers.drone.service=drone"
+      - "traefik.http.routers.drone.tls=true"
+      - "traefik.http.routers.drone.tls.certresolver=le"
+      - "traefik.http.services.drone.loadbalancer.server.port=80"
+      - "traefik.http.services.drone.loadbalancer.server.scheme=http"
+      - "traefik.http.middlewares.https_redirect.redirectscheme.scheme=https" # Standard move to default when traefik fixes behavior
+      - "traefik.http.middlewares.https_redirect.redirectscheme.permanent=true"
+      - "traefik.http.middlewares.sslHeaders.headers.framedeny=true"
+      - "traefik.http.middlewares.sslHeaders.headers.sslredirect=true"
+      - "traefik.http.middlewares.sslHeaders.headers.STSSeconds=315360000"
+      - "traefik.http.middlewares.sslHeaders.headers.browserXSSFilter=true"
+      - "traefik.http.middlewares.sslHeaders.headers.contentTypeNosniff=true"
+      - "traefik.http.middlewares.sslHeaders.headers.forceSTSHeader=true"
+      - "traefik.http.middlewares.sslHeaders.headers.STSIncludeSubdomains=true"
+      - "traefik.http.middlewares.sslHeaders.headers.STSPreload=true"
     deploy:
       labels:
-        traefik.enable: "true"
-        traefik.docker.network: "public"
-        traefik.backend: "drone"
-        traefik.frontend.rule: "Host:drone.ashlab.dev"
-        traefik.port: "80"
-        traefik.protocol: "http"
+        - "traefik.enable=true"
+        - "traefik.http.middlewares.sslHeaders.headers.SSLHost=drone.ashlab.dev"
+        - "traefik.http.routers.drone.rule=Host(`drone.ashlab.dev`)"
+        - "traefik.http.routers.drone.middlewares=https_redirect, sslHeaders"
+        - "traefik.http.routers.drone.service=drone"
+        - "traefik.http.routers.drone.tls=true"
+        - "traefik.http.routers.drone.tls.certresolver=le"
+        - "traefik.http.services.drone.loadbalancer.server.port=80"
+        - "traefik.http.services.drone.loadbalancer.server.scheme=http"
+        - "traefik.http.middlewares.https_redirect.redirectscheme.scheme=https" # Standard move to default when traefik fixes behavior
+        - "traefik.http.middlewares.https_redirect.redirectscheme.permanent=true"
+        - "traefik.http.middlewares.sslHeaders.headers.framedeny=true"
+        - "traefik.http.middlewares.sslHeaders.headers.sslredirect=true"
+        - "traefik.http.middlewares.sslHeaders.headers.STSSeconds=315360000"
+        - "traefik.http.middlewares.sslHeaders.headers.browserXSSFilter=true"
+        - "traefik.http.middlewares.sslHeaders.headers.contentTypeNosniff=true"
+        - "traefik.http.middlewares.sslHeaders.headers.forceSTSHeader=true"
+        - "traefik.http.middlewares.sslHeaders.headers.STSIncludeSubdomains=true"
+        - "traefik.http.middlewares.sslHeaders.headers.STSPreload=true"
 
   drone-agent1:
     logging: *default-logging

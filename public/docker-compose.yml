@@ -72,7 +72,7 @@ services:
       - "--certificatesResolvers.le.acme.storage=/certs/acme.json"
       - "--certificatesResolvers.le.acme.httpChallenge.entryPoint=web"
       - "--certificatesResolvers.le.acme.tlsChallenge=true"
-      - "--certificatesResolvers.le.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory" # lets encrypt staging, remove after verified deployment
+      # - "--certificatesResolvers.le.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory" # lets encrypt staging, remove after verified deployment
       - "--providers.docker.endpoint=tcp://mgmt_docker-proxy:2375"
       # - "--providers.docker.useBindPortIP=true"
       - "--providers.docker.exposedByDefault=false"
