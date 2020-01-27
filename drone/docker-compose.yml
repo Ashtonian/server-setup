@@ -51,7 +51,7 @@ services:
       - DRONE_DATABASE_DATASOURCE=postgres://postgres:${DRONE_PG_PASS}@postgres:5432/postgres?sslmode=disable # TODO
     labels:
       - "traefik.enable=true"
-      - "traefik.http.middlewares.sslHeaders.headers.SSLHost=drone.ashlab.dev"
+      # - "traefik.http.middlewares.sslHeaders.headers.SSLHost=drone.ashlab.dev"
       - "traefik.http.routers.drone.rule=Host(`drone.ashlab.dev`)"
       - "traefik.http.routers.drone.middlewares=https_redirect, sslHeaders"
       - "traefik.http.routers.drone.service=drone"
@@ -72,7 +72,7 @@ services:
     deploy:
       labels:
         - "traefik.enable=true"
-        - "traefik.http.middlewares.sslHeaders.headers.SSLHost=drone.ashlab.dev"
+        # - "traefik.http.middlewares.sslHeaders.headers.SSLHost=drone.ashlab.dev"
         - "traefik.http.routers.drone.rule=Host(`drone.ashlab.dev`)"
         - "traefik.http.routers.drone.middlewares=https_redirect, sslHeaders"
         - "traefik.http.routers.drone.service=drone"
