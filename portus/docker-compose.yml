@@ -33,6 +33,7 @@ services:
       # - PORTUS_OAUTH_GITHUB_DOMAIN=''
       - PORTUS_ANONYMOUS_BROWSING='false'
 
+
       #       - PORTUS_SECURITY_CLAIR_SERVER=http://clair:6060
     # ports:
     #   - 3000:3000
@@ -120,8 +121,9 @@ services:
       # - PORTUS_OAUTH_GITHUB_DOMAIN=''
       - PORTUS_ANONYMOUS_BROWSING='false'
 
-      - PORTUS_BACKGROUND_REGISTRY_ENABLED='true'
-      - PORTUS_BACKGROUND_SYNC_ENABLED='true'
+      - PORTUS_BACKGROUND=true
+      # - PORTUS_BACKGROUND_REGISTRY_ENABLED='true'
+      # - PORTUS_BACKGROUND_SYNC_ENABLED='true'
       - PORTUS_BACKGROUND_SYNC_STRATEGY='update-delete'
     links:
       - db
