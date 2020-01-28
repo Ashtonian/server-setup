@@ -120,7 +120,7 @@ services:
       REGISTRY_AUTH_TOKEN_REALM: https://portus.ashlab.dev/v2/token
       REGISTRY_AUTH_TOKEN_SERVICE: registry.ashlab.dev
       REGISTRY_AUTH_TOKEN_ISSUER: portus.ashlab.dev
-      REGISTRY_AUTH_TOKEN_ROOTCERTBUNDLE: /certificates/portus.ashlab.dev/fcertificate.crt
+      REGISTRY_AUTH_TOKEN_ROOTCERTBUNDLE: /certificates/portus.ashlab.dev/certificate.crt
 
       # Portus endpoint
       REGISTRY_NOTIFICATIONS_ENDPOINTS: >
