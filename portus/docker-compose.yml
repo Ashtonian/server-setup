@@ -12,7 +12,7 @@ services:
       - PORTUS_DB_PASSWORD=${DATABASE_PASSWORD}
       - PORTUS_DB_POOL=5
       - PORTUS_SECRET_KEY_BASE=${SECRET_KEY_BASE}
-      - PORTUS_KEY_PATH=/certificates/portus.key
+      - PORTUS_KEY_PATH=/certificates/portus.ashlab.dev/privatekey.key
       - PORTUS_PASSWORD=${PORTUS_PASSWORD}
       - PORTUS_CHECK_SSL_USAGE_ENABLED='false'
       - RAILS_SERVE_STATIC_FILES='true'
@@ -23,7 +23,8 @@ services:
     links:
       - db
     volumes:
-      - secrets:/certificates:ro
+      - traefik_certs_raw:/certificates:ro
+      # - secrets:/certificates:ro
     networks:
       - portus
       - public
@@ -88,7 +89,7 @@ services:
 
   #     # Secrets. It can possibly be handled better with Swarm's secrets.
   #     - PORTUS_SECRET_KEY_BASE=${SECRET_KEY_BASE}
-  #     - PORTUS_KEY_PATH=/certificates/portus.key
+      # - PORTUS_KEY_PATH=/certificates/portus.ashlab.dev/privatekey.key
   #     - PORTUS_PASSWORD=${PORTUS_PASSWORD}
 
   #     - PORTUS_BACKGROUND=true
@@ -98,6 +99,7 @@ services:
   #   #   - ./portus.env
   #   volumes:
   #     - secrets:/certificates:ro
+        - traefik_certs_raw:/certificates:ro
   #   networks:
   #     - portus
 
@@ -124,7 +126,7 @@ services:
       REGISTRY_AUTH_TOKEN_REALM: https://portus.ashlab.dev/v2/token
       REGISTRY_AUTH_TOKEN_SERVICE: registry.ashlab.dev
       REGISTRY_AUTH_TOKEN_ISSUER: portus.ashlab.dev
-      REGISTRY_AUTH_TOKEN_ROOTCERTBUNDLE: /secrets/portus.crt
+      REGISTRY_AUTH_TOKEN_ROOTCERTBUNDLE: /certificates/portus.ashlab.dev/certificate.crt
 
       # Portus endpoint
       REGISTRY_NOTIFICATIONS_ENDPOINTS: >
@@ -134,6 +136,7 @@ services:
           threshold: 5
           backoff: 1s
     volumes:
+      - traefik_certs_raw:/certificates:ro
       - registry:/var/lib/registry
       - secrets:/secrets:ro
       - ./config.yml:/etc/docker/registry/config.yml:ro
@@ -194,6 +197,13 @@ volumes:
       type: "none"
       o: "bind,rw"
       device: "/mnt/workspace/portus/secrets"
+  traefik_certs_raw:
+    driver: local
+    driver_opts:
+      type: "none"
+      o: "bind,ro"
+      device: "/mnt/workspace/traefik_certs_raw/"
+
 
   mariadb:
   registry:
