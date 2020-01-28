@@ -87,9 +87,9 @@ services:
       - "file"
       - "--version=v2"
       - "--source=/certs/acme.json"
-      - "--domain-subdir=true"
-      - "--dest=/dump/"
-      - "--watch=true"
+      # - "--domain-subdir=true"
+      # - "--dest=/dump/"
+      # - "--watch=true"
       # - "--crt-ext=.pem"
       # - "--key-ext=.pem"
     volumes:
