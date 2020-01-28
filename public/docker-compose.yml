@@ -107,8 +107,8 @@ networks:
 volumes:
   traefik_certs:
   traefik_certs_raw:
-    driver: local
-    driver_opts:
-      type: "none"
-      o: "bind,rw"
-      device: "/mnt/workspace/traefik_certs_raw/"
+    # driver: local
+    # driver_opts:
+    #   type: "none"
+    #   o: "bind,rw"
+    #   device: "/mnt/workspace/traefik_certs_raw/"
