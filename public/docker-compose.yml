@@ -84,7 +84,7 @@ services:
   certDumper:
     image: ldez/traefik-certs-dumper:v2.7.0
     command:
-      - "--file"
+      - "file"
       - "--version=v2"
       - "--source=./certs/acme.json" #TODO
       - "--domain-subdir=true"
