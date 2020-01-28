@@ -81,6 +81,19 @@ services:
       - "--providers.docker.network=public"
       # - "--providers.docker.swarmMode=true"
 
+  certDumper:
+    image: dez/traefik-certs-dumper:2.7
+    command:
+      - "--file"
+      - "--version=v2"
+      - "--source=./certs/acme.json" #TODO
+      - "--domain-subdir=true"
+      - "--watch=true"
+      # - "--crt-ext=.pem"
+      # - "--key-ext=.pem"
+    volumes:
+      - traefik_certs:/certs #TODO:
+
 networks:
   public:
     external: true
