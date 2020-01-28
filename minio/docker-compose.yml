@@ -147,5 +147,6 @@ volumes:
 
 networks:
   minio_distributed:
+    internal: true
 
 # TODO: public bucket access through api https://github.com/minio/minio/issues/1508
