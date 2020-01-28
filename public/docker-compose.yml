@@ -86,13 +86,16 @@ services:
     command:
       - "file"
       - "--version=v2"
-      - "--source=./certs/acme.json" #TODO
+      - "--source=/certs/acme.json"
+      - "--dest=/dump"
       - "--domain-subdir=true"
       - "--watch=true"
       # - "--crt-ext=.pem"
       # - "--key-ext=.pem"
     volumes:
-      - traefik_certs:/certs #TODO:
+      - traefik_certs:/certs
+      - traefik_certs_raw:/dump
+
 
 networks:
   public:
@@ -103,3 +106,9 @@ networks:
 
 volumes:
   traefik_certs:
+  traefik_certs_raw:
+    driver: local
+    driver_opts:
+      type: "none"
+      o: "bind,rw"
+      device: "/workspace/traefik_certs_raw/"
