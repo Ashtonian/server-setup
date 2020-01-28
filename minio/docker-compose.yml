@@ -1,0 +1,151 @@
+
+version: '3.1'
+
+services:
+  minio1:
+    image: minio/minio:RELEASE.2020-01-25T02-50-51Z
+    environment:
+      - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY}
+      - MINIO_SECRET_KEY=${MINIO_SECRET_KEY}
+    volumes:
+      - minio1-data:/export
+    networks:
+      - minio_distributed
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.minio.rule=Host(`minio.ashlab.dev`)"
+      - "traefik.http.routers.minio.middlewares=https_redirect, sslHeaders"
+      - "traefik.http.routers.minio.service=minio"
+      - "traefik.http.routers.minio.tls=true"
+      - "traefik.http.routers.minio.tls.certresolver=le"
+      - "traefik.http.services.minio.loadbalancer.server.port=9000"
+      - "traefik.http.services.minio.loadbalancer.server.scheme=http"
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.minio.rule=Host(`minio.ashlab.dev`)"
+        - "traefik.http.routers.minio.middlewares=https_redirect, sslHeaders"
+        - "traefik.http.routers.minio.service=minio"
+        - "traefik.http.routers.minio.tls=true"
+        - "traefik.http.routers.minio.tls.certresolver=le"
+        - "traefik.http.services.minio.loadbalancer.server.port=9000"
+        - "traefik.http.services.minio.loadbalancer.server.scheme=http"
+      restart_policy:
+        delay: 10s
+        max_attempts: 10
+        window: 60s
+
+    command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export
+
+  minio2:
+    image: minio/minio:RELEASE.2020-01-25T02-50-51Z
+    environment:
+      - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY}
+      - MINIO_SECRET_KEY=${MINIO_SECRET_KEY}
+    volumes:
+      - minio2-data:/export
+    networks:
+      - minio_distributed
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.minio.rule=Host(`minio.ashlab.dev`)"
+      - "traefik.http.routers.minio.middlewares=https_redirect, sslHeaders"
+      - "traefik.http.routers.minio.service=minio"
+      - "traefik.http.routers.minio.tls=true"
+      - "traefik.http.routers.minio.tls.certresolver=le"
+      - "traefik.http.services.minio.loadbalancer.server.port=9000"
+      - "traefik.http.services.minio.loadbalancer.server.scheme=http"
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.minio.rule=Host(`minio.ashlab.dev`)"
+        - "traefik.http.routers.minio.middlewares=https_redirect, sslHeaders"
+        - "traefik.http.routers.minio.service=minio"
+        - "traefik.http.routers.minio.tls=true"
+        - "traefik.http.routers.minio.tls.certresolver=le"
+        - "traefik.http.services.minio.loadbalancer.server.port=9000"
+        - "traefik.http.services.minio.loadbalancer.server.scheme=http"
+      restart_policy:
+        delay: 10s
+        max_attempts: 10
+        window: 60s
+    command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export
+
+  minio3:
+    image: minio/minio:RELEASE.2020-01-25T02-50-51Z
+    environment:
+      - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY}
+      - MINIO_SECRET_KEY=${MINIO_SECRET_KEY}
+    volumes:
+      - minio3-data:/export
+    networks:
+      - minio_distributed
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.minio.rule=Host(`minio.ashlab.dev`)"
+      - "traefik.http.routers.minio.middlewares=https_redirect, sslHeaders"
+      - "traefik.http.routers.minio.service=minio"
+      - "traefik.http.routers.minio.tls=true"
+      - "traefik.http.routers.minio.tls.certresolver=le"
+      - "traefik.http.services.minio.loadbalancer.server.port=9000"
+      - "traefik.http.services.minio.loadbalancer.server.scheme=http"
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.minio.rule=Host(`minio.ashlab.dev`)"
+        - "traefik.http.routers.minio.middlewares=https_redirect, sslHeaders"
+        - "traefik.http.routers.minio.service=minio"
+        - "traefik.http.routers.minio.tls=true"
+        - "traefik.http.routers.minio.tls.certresolver=le"
+        - "traefik.http.services.minio.loadbalancer.server.port=9000"
+        - "traefik.http.services.minio.loadbalancer.server.scheme=http"
+      restart_policy:
+        delay: 10s
+        max_attempts: 10
+        window: 60s
+    command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export
+
+  minio4:
+    image: minio/minio:RELEASE.2020-01-25T02-50-51Z
+    environment:
+      - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY}
+      - MINIO_SECRET_KEY=${MINIO_SECRET_KEY}
+    volumes:
+      - minio4-data:/export
+    networks:
+      - minio_distributed
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.minio.rule=Host(`minio.ashlab.dev`)"
+      - "traefik.http.routers.minio.middlewares=https_redirect, sslHeaders"
+      - "traefik.http.routers.minio.service=minio"
+      - "traefik.http.routers.minio.tls=true"
+      - "traefik.http.routers.minio.tls.certresolver=le"
+      - "traefik.http.services.minio.loadbalancer.server.port=9000"
+      - "traefik.http.services.minio.loadbalancer.server.scheme=http"
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.minio.rule=Host(`minio.ashlab.dev`)"
+        - "traefik.http.routers.minio.middlewares=https_redirect, sslHeaders"
+        - "traefik.http.routers.minio.service=minio"
+        - "traefik.http.routers.minio.tls=true"
+        - "traefik.http.routers.minio.tls.certresolver=le"
+        - "traefik.http.services.minio.loadbalancer.server.port=9000"
+        - "traefik.http.services.minio.loadbalancer.server.scheme=http"
+      restart_policy:
+        delay: 10s
+        max_attempts: 10
+        window: 60s
+    command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export
+
+volumes:
+  minio1-data:
+  minio2-data:
+  minio3-data:
+  minio4-data:
+
+networks:
+  minio_distributed:
+
+# TODO: public bucket access through api https://github.com/minio/minio/issues/1508
