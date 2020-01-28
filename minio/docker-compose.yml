@@ -11,6 +11,7 @@ services:
       - minio1-data:/export
     networks:
       - minio_distributed
+      - public
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.minio.rule=Host(`minio.ashlab.dev`)"
@@ -51,6 +52,7 @@ services:
       - minio2-data:/export
     networks:
       - minio_distributed
+      - public
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.minio.rule=Host(`minio.ashlab.dev`)"
@@ -90,6 +92,7 @@ services:
       - minio3-data:/export
     networks:
       - minio_distributed
+      - public
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.minio.rule=Host(`minio.ashlab.dev`)"
@@ -129,6 +132,7 @@ services:
       - minio4-data:/export
     networks:
       - minio_distributed
+      - public
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.minio.rule=Host(`minio.ashlab.dev`)"
@@ -167,6 +171,8 @@ volumes:
   minio4-data:
 
 networks:
+  public:
+    external: true
   minio_distributed:
     internal: true
 
