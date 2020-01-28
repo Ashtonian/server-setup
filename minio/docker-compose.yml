@@ -36,7 +36,7 @@ services:
         max_attempts: 10
         window: 60s
 
-    command: server
+    command: server /export
     # http://minio1/export http://minio2/export http://minio3/export http://minio4/export
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
