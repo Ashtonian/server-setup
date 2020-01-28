@@ -111,4 +111,4 @@ volumes:
     driver_opts:
       type: "none"
       o: "bind,rw"
-      device: "/workspace/traefik_certs_raw/"
+      device: "mnt/workspace/traefik_certs_raw/"
