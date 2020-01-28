@@ -78,6 +78,7 @@ services:
         max_attempts: 10
         window: 60s
     command: server /export http://minio1/export
+    healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
       interval: 30s
       timeout: 20s
