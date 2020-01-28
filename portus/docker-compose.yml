@@ -69,39 +69,33 @@ services:
         # - "traefik.http.middlewares.sslHeaders.headers.forceSTSHeader=true"
         # - "traefik.http.middlewares.sslHeaders.headers.STSIncludeSubdomains=true"
         # - "traefik.http.middlewares.sslHeaders.headers.STSPreload=true"
+  background:
+    image: opensuse/portus:2.4.3
+    depends_on:
+      - portus
+      - db
+    environment:
+      # Theoretically not needed, but cconfig's been buggy on this...
+      - CCONFIG_PREFIX=PORTUS
+      - PORTUS_MACHINE_FQDN_VALUE=portus.ashlab.dev
+      - PORTUS_DB_HOST=db
+      - PORTUS_DB_DATABASE=portus_production
+      - PORTUS_DB_PASSWORD=${DATABASE_PASSWORD}
+      - PORTUS_DB_POOL=5
+      - PORTUS_SECRET_KEY_BASE=${SECRET_KEY_BASE}
+      - PORTUS_KEY_PATH=/certificates/portus.ashlab.dev/privatekey.key
+      - PORTUS_PASSWORD=${PORTUS_PASSWORD}
+      # - PORTUS_CHECK_SSL_USAGE_ENABLED='false'
 
-  # background:
-  #   image: opensuse/portus:2.4.3
-  #   depends_on:
-  #     - portus
-  #     - db
-  #   environment:
-  #     # Theoretically not needed, but cconfig's been buggy on this...
-  #     - CCONFIG_PREFIX=PORTUS
-  #     - PORTUS_MACHINE_FQDN_VALUE=portus.ashlab.dev
-
-  #     # DB. The password for the database should definitely not be here. You are
-  #     # probably better off with Docker Swarm secrets.
-  #     - PORTUS_DB_HOST=db
-  #     - PORTUS_DB_DATABASE=portus_production
-  #     - PORTUS_DB_PASSWORD=${DATABASE_PASSWORD}
-  #     - PORTUS_DB_POOL=5
-
-  #     # Secrets. It can possibly be handled better with Swarm's secrets.
-  #     - PORTUS_SECRET_KEY_BASE=${SECRET_KEY_BASE}
-      # - PORTUS_KEY_PATH=/certificates/portus.ashlab.dev/privatekey.key
-  #     - PORTUS_PASSWORD=${PORTUS_PASSWORD}
-
-  #     - PORTUS_BACKGROUND=true
-  #   links:
-  #     - db
-  #   # env_file:
-  #   #   - ./portus.env
-  #   volumes:
-  #     - secrets:/certificates:ro
-        - traefik_certs_raw:/certificates:ro
-  #   networks:
-  #     - portus
+      - PORTUS_BACKGROUND=true
+    links:
+      - db
+    # env_file:
+    #   - ./portus.env
+    volumes:
+      - traefik_certs_raw:/certificates:ro
+    networks:
+      - portus
 
   db:
     image: library/mariadb:10.0.33
@@ -126,7 +120,7 @@ services:
       REGISTRY_AUTH_TOKEN_REALM: https://portus.ashlab.dev/v2/token
       REGISTRY_AUTH_TOKEN_SERVICE: registry.ashlab.dev
       REGISTRY_AUTH_TOKEN_ISSUER: portus.ashlab.dev
-      REGISTRY_AUTH_TOKEN_ROOTCERTBUNDLE: /certificates/portus.ashlab.dev/certificate.crt
+      REGISTRY_AUTH_TOKEN_ROOTCERTBUNDLE: /certificates/portus.ashlab.dev/fcertificate.crt
 
       # Portus endpoint
       REGISTRY_NOTIFICATIONS_ENDPOINTS: >
