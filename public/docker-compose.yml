@@ -82,7 +82,7 @@ services:
       # - "--providers.docker.swarmMode=true"
 
   certDumper:
-    image: dez/traefik-certs-dumper:2.7
+    image: ldez/traefik-certs-dumper:2.7
     command:
       - "--file"
       - "--version=v2"
