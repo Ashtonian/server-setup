@@ -1,8 +1,16 @@
-mount -t nfs 10.0.0.40:/apps /mnt/apps
-mount -t nfs 10.0.0.40:/media /mnt/media
-mount -t nfs 10.0.0.40:/public /mnt/public
-mount -t nfs 10.0.0.40:/scripts /mnt/scripts
-mount -t nfs 10.0.0.40:/fam /mnt/fam
-mount -t nfs 10.0.0.40:/drop /mnt/drop
-mount -t nfs 10.0.0.40:/backup /mnt/backup
-mount -t nfs 10.0.0.40:/docs /mnt/docs
+sudo mkdir /mnt/apps
+sudo mount -t nfs 10.0.0.40:/lutece/apps /mnt/apps
+sudo mkdir /mnt/media
+sudo mount -t nfs 10.0.0.40:/lutece/media /mnt/media
+sudo mkdir /mnt/public
+sudo mount -t nfs 10.0.0.40:/lutece/public /mnt/public
+sudo mkdir /mnt/scripts
+sudo mount -t nfs 10.0.0.40:/lutece/scripts /mnt/scripts
+sudo mkdir /mnt/fam
+sudo mount -t nfs 10.0.0.40:/lutece/fam /mnt/fam
+sudo mkdir /mnt/drop
+sudo mount -t nfs 10.0.0.40:/lutece/drop /mnt/drop
+sudo mkdir /mnt/backup
+sudo mount -t nfs 10.0.0.40:/lutece/backup /mnt/backup
+sudo mkdir /mnt/docs
+sudo mount -t nfs 10.0.0.40:/lutece/docs /mnt/docs
